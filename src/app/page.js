@@ -1,23 +1,39 @@
+import Cursor from '@/components/Cursor';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
-import Portfolio from '@/components/Portfolio';
-import Films from '@/components/Films';
 import Services from '@/components/Services';
 import Testimonials from '@/components/Testimonials';
-import About from '@/components/About';
-import Contact from '@/components/Contact';
+import Pricing from '@/components/Pricing';
+import Footer from '@/components/Footer';
 
 export default function Home() {
   return (
-    <main>
+    <main className="relative min-h-screen bg-[#f8f6f0]">
+      {/* Premium custom cursor */}
+      <Cursor />
+      
+      {/* Navigation */}
       <Navbar />
-      <Hero />
-      <Portfolio />
-      <Films />
-      <Services />
-      <Testimonials />
-      <About />
-      <Contact />
+      
+      {/* Page Sections */}
+      <div id="top">
+        <Hero />
+      </div>
+      
+      <div id="services">
+        <Services />
+      </div>
+      
+      <div id="testimonials">
+        <Testimonials />
+      </div>
+      
+      <div id="pricing">
+        <Pricing />
+      </div>
+      
+      {/* Footer */}
+      <Footer />
     </main>
   );
 }

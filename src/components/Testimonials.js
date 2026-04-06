@@ -1,37 +1,84 @@
-'use client';
-import styles from './Testimonials.module.css';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/pagination';
+"use client";
 
-const REVIEWS = [
-  { name: 'Sarah & James', text: 'They truly captured the essence of our love. Every single photo feels like a cinematic masterpiece.' },
-  { name: 'Emily & Mark', text: 'We could not have asked for a better team. The emotions, the lighting, everything was perfect!' },
-  { name: 'Chloe & Dave', text: 'Professional, creative, and insanely talented. The films and photos made us cry all over again.' }
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+
+const testimonials = [
+  {
+    name: "Eleanor & James",
+    text: "FlashClicks captured the magic of our wedding day in ways we couldn't have imagined. Every photo is a masterpiece that tells our story beautifully.",
+    image: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=1780&auto=format&fit=crop"
+  },
+  {
+    name: "Sophia Carter",
+    text: "The portrait session was incredibly comfortable. They know exactly how to use light to bring out your best features. Absolutely stunning work.",
+    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1976&auto=format&fit=crop"
+  },
+  {
+    name: "Vogue Magazine",
+    text: "A truly visionary approach to editorial photography. The aesthetic is clean, luxurious, and commands attention on every spread.",
+    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop"
+  },
+  {
+    name: "Michael Chen",
+    text: "Professionalism at its finest. They framed our entire event with such an artistic eye, we felt like we were watching a movie of our own lives.",
+    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1887&auto=format&fit=crop"
+  }
 ];
+
+// Duplicate the array to create a seamless infinite loop
+const infiniteTestimonials = [...testimonials, ...testimonials];
 
 export default function Testimonials() {
   return (
-    <section className={styles.testimonialsSection}>
-      <div className="container">
-        <h2 className="section-title">Client Love</h2>
-        <Swiper
-          modules={[Autoplay, Pagination]}
-          spaceBetween={50}
-          slidesPerView={1}
-          autoplay={{ delay: 5000 }}
-          pagination={{ clickable: true }}
-          className={styles.swiperContainer}
+    <section className="bg-white py-32 overflow-hidden border-y border-[#f8f6f0]">
+      <div className="container mx-auto px-6 mb-20 text-center">
+        <span className="text-[#c9a063] font-sans tracking-[0.3em] uppercase text-sm mb-4 block">Kind Words</span>
+        <h2 className="font-serif text-4xl md:text-5xl text-[#1a1a1a] font-light">
+          Client Stories
+        </h2>
+      </div>
+
+      <div className="relative flex w-full max-w-[100vw] overflow-hidden">
+        {/* Left/Right fading edge gradients for premium feel */}
+        <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+
+        <motion.div 
+          className="flex gap-8 px-4"
+          animate={{ x: [0, -1035 * testimonials.length] }} // Adjust depending on item width
+          transition={{
+            repeat: Infinity,
+            ease: "linear",
+            duration: 40 // Slower = more luxurious
+          }}
+          whileHover={{ animationPlayState: 'paused' }} // Only works with some setups, but nice to have
         >
-          {REVIEWS.map((r, i) => (
-            <SwiperSlide key={i} className={styles.slide}>
-              <div className={styles.stars}>★★★★★</div>
-              <p className={styles.quote}>"{r.text}"</p>
-              <div className={styles.name}>— {r.name}</div>
-            </SwiperSlide>
+          {infiniteTestimonials.map((item, index) => (
+            <div 
+              key={index} 
+              className="min-w-[350px] md:min-w-[450px] bg-[#f8f6f0] p-10 md:p-14 rounded-sm shadow-sm flex flex-col justify-between hover:shadow-xl transition-shadow duration-500 cursor-pointer"
+            >
+              <div className="mb-8">
+                <svg className="w-8 h-8 text-[#c9a063] mb-6 opacity-50" fill="currentColor" viewBox="0 0 32 32" aria-hidden="true">
+                  <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
+                </svg>
+                <p className="font-serif text-lg md:text-xl text-[#333] leading-relaxed italic">
+                  "{item.text}"
+                </p>
+              </div>
+              
+              <div className="flex items-center gap-4">
+                <div className="relative w-14 h-14 rounded-full overflow-hidden">
+                  <Image src={item.image} alt={item.name} fill className="object-cover" />
+                </div>
+                <div>
+                  <h4 className="font-sans font-semibold text-[#1a1a1a] uppercase tracking-wider text-sm">{item.name}</h4>
+                </div>
+              </div>
+            </div>
           ))}
-        </Swiper>
+        </motion.div>
       </div>
     </section>
   );
