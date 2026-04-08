@@ -67,12 +67,12 @@ export default function Pricing() {
   };
 
   return (
-    <section id="pricing" className="bg-[#1a1a1a] py-32 text-white relative flex justify-center">
+    <section id="pricing" className="bg-[#1a1a1a] text-white relative block w-full overflow-hidden" style={{ paddingTop: '8rem', paddingBottom: '14rem' }}>
       <div className="container mx-auto px-6">
-        <div className="text-center mb-20 relative z-10">
-          <span className="text-[#c9a063] font-sans tracking-[0.3em] uppercase text-sm mb-4 block">Investment</span>
+        <div className="text-center relative z-10" style={{ marginBottom: '6rem' }}>
+          <span className="text-[#c9a063] font-sans tracking-[0.3em] uppercase text-sm block" style={{ marginBottom: '1rem' }}>Investment</span>
           <h2 className="font-serif text-4xl md:text-5xl font-light">Curated Packages</h2>
-          <p className="text-white/60 font-sans mt-6 max-w-xl mx-auto">
+          <p className="text-white/60 font-sans max-w-xl mx-auto" style={{ marginTop: '1.5rem', marginBottom: '2rem' }}>
             Transparent pricing for an unparalleled visual narrative. Select the collection that best aligns with your vision.
           </p>
         </div>
@@ -82,14 +82,15 @@ export default function Pricing() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 relative z-10 max-w-6xl mx-auto items-center"
+          className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 relative z-10 max-w-6xl mx-auto items-stretch"
+          style={{ marginTop: '2rem' }}
         >
           {packages.map((pkg, index) => (
             <motion.div 
               key={index}
               variants={cardVariants}
-              whileHover={{ y: -10 }}
-              className={`relative flex flex-col p-10 h-full rounded-sm transition-all duration-300 ${
+              whileHover={{ y: -10, boxShadow: "0px 20px 40px rgba(0,0,0,0.4)" }}
+              className={`relative flex flex-col p-10 h-auto rounded-sm transition-all duration-300 ${
                 pkg.highlighted 
                   ? 'bg-gradient-to-b from-[#2a2a2a] to-[#1a1a1a] border border-[#c9a063]/50 shadow-[0_0_40px_rgba(201,160,99,0.15)] md:scale-110 z-20 py-14' 
                   : 'bg-[#222] border border-white/10'

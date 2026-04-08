@@ -20,18 +20,33 @@ export default function Hero() {
     return () => clearInterval(timer);
   }, []);
 
+  // Cinematic Letter by letter reveal strategy
+  const titleText = "FlashClicks.";
+  const titleVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { staggerChildren: 0.08, delayChildren: 0.8 } 
+    }
+  };
+  
+  const letterVariants = {
+    hidden: { opacity: 0, y: 40, filter: "blur(10px)" },
+    visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 1, ease: [0.16, 1, 0.3, 1] } }
+  };
+
   return (
     <section id="home" className="relative h-screen w-full overflow-hidden bg-black flex items-center justify-center">
-      {/* Background Images with Ken Burns effect */}
+      {/* Background Images with Slow Motion Ken Burns effect */}
       <AnimatePresence mode="popLayout">
         <motion.div
           key={currentIndex}
-          initial={{ opacity: 0, scale: 1.1 }}
+          initial={{ opacity: 0, scale: 1.15 }}
           animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0 }}
+          exit={{ opacity: 0, scale: 1.05 }}
           transition={{ 
-            opacity: { duration: 1.5, ease: "easeInOut" },
-            scale: { duration: 8, ease: "linear" }
+            opacity: { duration: 2, ease: "easeInOut" },
+            scale: { duration: 10, ease: "linear" }
           }}
           className="absolute inset-0"
         >
@@ -45,64 +60,97 @@ export default function Hero() {
         </motion.div>
       </AnimatePresence>
 
-      {/* Dark Overlay for readability */}
-      <div className="absolute inset-0 bg-black/40 z-10" />
+      {/* Dark Overlay with Heavy Cinematic Vignette Gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/30 to-black/90 z-10" />
 
       {/* Hero Content */}
       <div className="relative z-20 container mx-auto px-6 h-full flex flex-col justify-center items-center text-center">
-        {/* Glassmorphism Box */}
+        
+        {/* Luxury Glassmorphism Container with Gold Glow */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
-          className="px-10 py-16 md:p-20 border border-white/20 bg-black/20 backdrop-blur-sm rounded-lg flex flex-col items-center max-w-3xl"
+          initial={{ opacity: 0, scale: 0.95, y: 30 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 1.5, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          className="relative px-8 py-16 md:px-24 md:py-20 border border-white/10 bg-black/20 backdrop-blur-md shadow-[0_0_100px_rgba(201,160,99,0.15)] rounded-2xl flex flex-col items-center max-w-4xl overflow-hidden group"
         >
+          {/* Subtle animated light sweep on hover */}
+          <motion.div 
+            initial={{ x: "-100%" }}
+            whileHover={{ x: "100%" }}
+            transition={{ duration: 1.5, ease: "easeInOut" }}
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-12 pointer-events-none" 
+          />
+
+          {/* Letter by Letter Title Reveal */}
           <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.8 }}
-            className="font-serif text-5xl md:text-7xl lg:text-8xl text-white font-light tracking-wide mb-6"
+            variants={titleVariants}
+            initial="hidden"
+            animate="visible"
+            className="font-serif text-5xl md:text-8xl lg:text-9xl text-white font-light tracking-wide mb-8 flex overflow-hidden justify-center items-center"
           >
-            Flash<span className="font-sans font-thin">Clicks.</span>
+            {titleText.split('').map((char, index) => (
+              <motion.span 
+                key={index} 
+                variants={letterVariants}
+                className={index >= 5 ? "font-sans font-thin text-white/70" : "text-white"}
+              >
+                {char}
+              </motion.span>
+            ))}
           </motion.h1>
           
           <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 1.2 }}
-            className="text-white/80 font-sans text-sm md:text-base lg:text-lg tracking-[0.2em] uppercase mb-10 text-center max-w-[500px]"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.5, delay: 1.6, ease: "easeOut" }}
+            className="text-[#c9a063] font-sans text-xs md:text-sm lg:text-base tracking-[0.4em] uppercase mb-12 text-center max-w-[600px] leading-relaxed"
           >
-            Capturing Moments, Creating Stories
+            Capturing the profound beauty of fleeting moments
           </motion.p>
           
+          {/* Animated Interactive Buttons */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 1.5 }}
+            transition={{ duration: 1.5, delay: 2 }}
             className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto"
           >
-            <a href="#portfolio" className="btn-primary px-8 py-3 text-sm tracking-widest uppercase text-white border border-white hover:bg-white hover:text-black transition-colors duration-300 w-full sm:w-auto text-center">
-              View Portfolio
-            </a>
-            <a href="#contact" className="btn-secondary px-8 py-3 text-sm tracking-widest uppercase text-black bg-white border border-white hover:bg-transparent hover:text-white transition-colors duration-300 w-full sm:w-auto text-center">
-              Book Now
-            </a>
+            {/* Fixed links to direct to correct sections (#services and #contact) */}
+            <motion.a 
+              href="#services" 
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
+              className="relative overflow-hidden group px-10 py-5 text-xs tracking-[0.2em] uppercase text-white border border-white hover:border-[#c9a063] transition-colors duration-500 w-full sm:w-auto text-center rounded-sm"
+            >
+              <span className="relative z-10 group-hover:text-black transition-colors duration-500 font-semibold">Our Expertise</span>
+              <div className="absolute inset-0 bg-[#c9a063] transform scale-y-0 origin-bottom group-hover:scale-y-100 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
+            </motion.a>
+            
+            <motion.a 
+              href="#contact" 
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
+              className="relative overflow-hidden group px-10 py-5 text-xs tracking-[0.2em] uppercase text-black bg-white border border-white hover:border-[#c9a063] transition-colors duration-500 w-full sm:w-auto text-center rounded-sm"
+            >
+              <span className="relative z-10 group-hover:text-black transition-colors duration-500 font-semibold">Book Studio</span>
+              <div className="absolute inset-0 bg-[#c9a063] transform scale-y-0 origin-bottom group-hover:scale-y-100 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
+            </motion.a>
           </motion.div>
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Redesigned Minimal Luxury Vertical Scroll Indicator */}
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 1 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2"
+        transition={{ delay: 2.8, duration: 1.5 }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-6"
       >
-        <span className="text-white/60 text-xs tracking-[0.3em] uppercase">Scroll</span>
+        <span className="text-white/40 text-[10px] tracking-[0.4em] uppercase" style={{ writingMode: 'vertical-rl' }}>Explore</span>
         <motion.div 
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-          className="w-[1px] h-12 bg-gradient-to-b from-white/60 to-transparent"
+          animate={{ y: [0, 20, 0], opacity: [0.3, 1, 0.3] }}
+          transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
+          className="w-[1px] h-20 bg-gradient-to-b from-white to-transparent"
         />
       </motion.div>
     </section>

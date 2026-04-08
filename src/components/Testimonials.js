@@ -31,15 +31,15 @@ const infiniteTestimonials = [...testimonials, ...testimonials];
 
 export default function Testimonials() {
   return (
-    <section className="bg-white py-32 overflow-hidden border-y border-[#f8f6f0]">
-      <div className="container mx-auto px-6 mb-20 text-center">
-        <span className="text-[#c9a063] font-sans tracking-[0.3em] uppercase text-sm mb-4 block">Kind Words</span>
+    <section className="bg-white overflow-hidden border-y border-[#f8f6f0]" style={{ paddingTop: '8rem', paddingBottom: '10rem' }}>
+      <div className="container mx-auto px-6 text-center" style={{ marginBottom: '6rem' }}>
+        <span className="text-[#c9a063] font-sans tracking-[0.3em] uppercase text-sm block" style={{ marginBottom: '1rem' }}>Kind Words</span>
         <h2 className="font-serif text-4xl md:text-5xl text-[#1a1a1a] font-light">
           Client Stories
         </h2>
       </div>
 
-      <div className="relative flex w-full max-w-[100vw] overflow-hidden">
+      <div className="relative flex flex-col w-full max-w-[100vw] overflow-visible" style={{ paddingBottom: '3rem' }}>
         {/* Left/Right fading edge gradients for premium feel */}
         <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
