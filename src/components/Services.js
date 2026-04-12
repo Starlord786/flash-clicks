@@ -50,7 +50,7 @@ function ServiceBlock({ service, index }) {
     <motion.div 
       ref={ref}
       style={{ opacity, scale }}
-      className={`min-h-[80vh] flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-10 lg:gap-20 mb-32`}
+      className={`relative min-h-[80vh] flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-10 lg:gap-20 mb-32`}
     >
       <div className="w-full lg:w-1/2 flex flex-col justify-center">
         <span className="text-[#c9a063] font-sans tracking-[0.3em] uppercase text-sm mb-4">0{index + 1} / Service</span>
@@ -68,7 +68,7 @@ function ServiceBlock({ service, index }) {
               whileHover={{ scale: 1.05 }}
               className="relative w-32 h-40 md:w-40 md:h-48 overflow-hidden rounded-sm shadow-md"
             >
-              <Image src={img} alt={`${service.title} gallery ${i}`} fill className="object-cover" />
+              <Image src={img} alt={`${service.title} gallery ${i}`} fill sizes="(max-width: 768px) 128px, 160px" className="object-cover" />
               <div className="absolute inset-0 bg-black/10 hover:bg-transparent transition-colors duration-300" />
             </motion.div>
           ))}
@@ -80,6 +80,7 @@ function ServiceBlock({ service, index }) {
           src={service.image} 
           alt={service.title} 
           fill 
+          sizes="(max-width: 1024px) 100vw, 50vw"
           className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />

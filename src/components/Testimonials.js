@@ -70,7 +70,7 @@ export default function Testimonials() {
               
               <div className="flex items-center gap-4">
                 <div className="relative w-14 h-14 rounded-full overflow-hidden">
-                  <Image src={item.image} alt={item.name} fill className="object-cover" />
+                  <Image src={item.image} alt={item.name} fill sizes="56px" className="object-cover" />
                 </div>
                 <div>
                   <h4 className="font-sans font-semibold text-[#1a1a1a] uppercase tracking-wider text-sm">{item.name}</h4>

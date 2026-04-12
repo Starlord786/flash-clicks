@@ -55,6 +55,7 @@ export default function Hero() {
             alt="Hero background"
             fill
             priority
+            sizes="100vw"
             className="object-cover"
           />
         </motion.div>
