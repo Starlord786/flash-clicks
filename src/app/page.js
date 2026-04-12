@@ -8,31 +8,13 @@ import Footer from '@/components/Footer';
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen bg-[#f8f6f0]">
-      {/* Premium custom cursor */}
+    <main style={{ position: 'relative', minHeight: '100vh', overflowX: 'hidden' }}>
       <Cursor />
-      
-      {/* Navigation */}
       <Navbar />
-      
-      {/* Page Sections */}
-      <div id="top">
-        <Hero />
-      </div>
-      
-      <div id="services">
-        <Services />
-      </div>
-      
-      <div id="testimonials">
-        <Testimonials />
-      </div>
-      
-      <div id="pricing">
-        <Pricing />
-      </div>
-      
-      {/* Footer */}
+      <div id="top"><Hero /></div>
+      <div id="services"><Services /></div>
+      <div id="testimonials"><Testimonials /></div>
+      <div id="pricing"><Pricing /></div>
       <Footer />
     </main>
   );

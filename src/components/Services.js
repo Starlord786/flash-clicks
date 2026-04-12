@@ -1,56 +1,83 @@
 "use client";
 
-import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 
+/* ─── Data ─────────────────────────────────────────────────────────────── */
 const servicesData = [
   {
-    title: "Wedding Photography",
-    description: "Capturing the pure emotion, fleeting glances, and eternal promises of your special day. We document your love story with a cinematic, timeless approach.",
-    image: "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070&auto=format&fit=crop",
-    gallery: [
+    id: "wedding",
+    number: "01",
+    label: "Wedding",
+    title: ["Wedding", "Photography"],
+    tagline: "Love Stories, Told Forever",
+    description:
+      "Capturing the pure emotion, fleeting glances, and eternal promises of your special day. We document your love story with a cinematic, timeless approach.",
+    accent: "#c9a063",
+    heroImages: [
+      "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=2070&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=2069&auto=format&fit=crop"
-    ]
+      "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=2069&auto=format&fit=crop",
+    ],
+    gallery: [
+      { src: "https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=2070&auto=format&fit=crop", caption: "Ceremony Moments", span: "wide" },
+      { src: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=2069&auto=format&fit=crop", caption: "Golden Hour" },
+      { src: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1887&auto=format&fit=crop", caption: "Candid Emotions" },
+      { src: "https://images.unsplash.com/photo-1591604466107-ec97de577aff?q=80&w=2071&auto=format&fit=crop", caption: "Reception" },
+    ],
   },
   {
-    title: "Portrait Studio",
-    description: "Elegant, striking, and intimate portraits. We focus on lighting and composition to bring out your true personality and unique beauty.",
-    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop",
-    gallery: [
+    id: "portrait",
+    number: "02",
+    label: "Portrait",
+    title: ["Portrait", "Studio"],
+    tagline: "Your Essence, Beautifully Captured",
+    description:
+      "Elegant, striking, and intimate portraits that reveal the soul behind the face. Expert lighting and composition bring your true personality to life.",
+    accent: "#b08d57",
+    heroImages: [
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1887&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop"
-    ]
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop",
+    ],
+    gallery: [
+      { src: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1887&auto=format&fit=crop", caption: "Studio Light", span: "wide" },
+      { src: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop", caption: "Natural Light" },
+      { src: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=2070&auto=format&fit=crop", caption: "Dramatic Moody" },
+      { src: "https://images.unsplash.com/photo-1598550874175-4d0ef436c909?q=80&w=1887&auto=format&fit=crop", caption: "Elegance" },
+    ],
   },
   {
-    title: "Fashion & Editorial",
-    description: "High-end fashion and editorial photography for brands and models. We create visually striking images that define modern aesthetics.",
-    image: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=2070&auto=format&fit=crop",
-    gallery: [
+    id: "fashion",
+    number: "03",
+    label: "Fashion",
+    title: ["Fashion &", "Editorial"],
+    tagline: "Defining Modern Aesthetics",
+    description:
+      "High-end fashion and editorial photography for brands and models. Visually striking images that command attention and define modern aesthetics.",
+    accent: "#c9a063",
+    heroImages: [
+      "https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=2070&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=2070&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1920&auto=format&fit=crop"
-    ]
-  }
+      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1920&auto=format&fit=crop",
+    ],
+    gallery: [
+      { src: "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=2070&auto=format&fit=crop", caption: "Runway Ready", span: "wide" },
+      { src: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1920&auto=format&fit=crop", caption: "Editorial Spread" },
+      { src: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?q=80&w=1974&auto=format&fit=crop", caption: "Brand Campaign" },
+      { src: "https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=1976&auto=format&fit=crop", caption: "Lookbook" },
+    ],
+  },
 ];
 
-function ServiceBlock({ service, index }) {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["0 1", "1.3 1"]
-  });
-
-  const scale = useTransform(scrollYProgress, [0, 1], [0.8, 1]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [0, 0.5, 1]);
-
-  const isEven = index % 2 === 0;
-
+/* ─── Text split reveal ─────────────────────────────────────────────────── */
+function SplitReveal({ children, delay = 0, className = "" }) {
   return (
     <motion.div 
       ref={ref}
       style={{ opacity, scale }}
-      className={`relative min-h-[80vh] flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-10 lg:gap-20 mb-32`}
+      className={`min-h-[80vh] flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-10 lg:gap-20 mb-32`}
     >
       <div className="w-full lg:w-1/2 flex flex-col justify-center">
         <span className="text-[#c9a063] font-sans tracking-[0.3em] uppercase text-sm mb-4">0{index + 1} / Service</span>
@@ -65,10 +92,11 @@ function ServiceBlock({ service, index }) {
           {service.gallery.map((img, i) => (
             <motion.div 
               key={i}
-              whileHover={{ scale: 1.05 }}
-              className="relative w-32 h-40 md:w-40 md:h-48 overflow-hidden rounded-sm shadow-md"
+              className="svc-bar-btn"
+              onClick={() => advance(i)}
+              aria-label={`Slide ${i + 1}`}
             >
-              <Image src={img} alt={`${service.title} gallery ${i}`} fill sizes="(max-width: 768px) 128px, 160px" className="object-cover" />
+              <Image src={img} alt={`${service.title} gallery ${i}`} fill className="object-cover" />
               <div className="absolute inset-0 bg-black/10 hover:bg-transparent transition-colors duration-300" />
             </motion.div>
           ))}
@@ -80,44 +108,413 @@ function ServiceBlock({ service, index }) {
           src={service.image} 
           alt={service.title} 
           fill 
-          sizes="(max-width: 1024px) 100vw, 50vw"
           className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
       </div>
+    </div>
+  );
+}
+
+/* ─── Divider ───────────────────────────────────────────────────────────── */
+function GoldDivider({ label }) {
+  return (
+    <motion.div
+      className="svc-divider"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 1 }}
+    >
+      <div className="svc-divider-line" />
+      <span className="svc-divider-label">{label}</span>
+      <div className="svc-divider-line" />
     </motion.div>
   );
 }
 
+/* ─── Main Export ───────────────────────────────────────────────────────── */
 export default function Services() {
   return (
-    <section id="services" className="bg-[#f8f6f0] py-32 px-6 md:px-16 overflow-hidden">
-      <div className="container mx-auto">
-        <div className="text-center mb-24">
-          <motion.h2 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1 }}
-            className="font-serif text-4xl md:text-6xl text-[#1a1a1a] font-light"
-          >
-            Our Expertise
-          </motion.h2>
-          <motion.div 
-            initial={{ width: 0 }}
-            whileInView={{ width: "80px" }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, delay: 0.5 }}
-            className="h-[1px] bg-[#c9a063] mx-auto mt-8"
-          />
-        </div>
+    <section id="services-section">
+      <style>{`
+        /* ═══════════════════════════════════════
+           HERO SLIDESHOW
+        ═══════════════════════════════════════ */
+        .svc-hero {
+          position: relative;
+          width: 100%;
+          height: 100vh;
+          min-height: 600px;
+          overflow: hidden;
+          display: flex;
+          align-items: flex-end;
+        }
 
-        <div className="flex flex-col">
-          {servicesData.map((service, index) => (
-            <ServiceBlock key={index} service={service} index={index} />
-          ))}
+        /* Slides */
+        .svc-slide {
+          position: absolute;
+          inset: 0;
+          opacity: 0;
+          will-change: opacity, transform;
+        }
+        .svc-slide.is-leaving {
+          opacity: 0;
+          animation: slideLeave 1.2s cubic-bezier(0.4,0,0.6,1) forwards;
+        }
+        .svc-slide.is-active {
+          opacity: 1;
+          animation: slideEnter 6s ease-out forwards;
+        }
+        .svc-slide-img {
+          object-fit: cover;
+        }
+        @keyframes slideEnter {
+          from { transform: scale(1.0); opacity: 1; }
+          to   { transform: scale(1.12); opacity: 1; }
+        }
+        @keyframes slideLeave {
+          from { opacity: 1; transform: scale(1.12); }
+          to   { opacity: 0; transform: scale(1.18); }
+        }
+
+        /* Vignette overlay */
+        .svc-vignette {
+          position: absolute;
+          inset: 0;
+          z-index: 1;
+          background:
+            linear-gradient(to top,    rgba(0,0,0,0.88) 0%, rgba(0,0,0,0) 50%),
+            linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 35%),
+            linear-gradient(to right,  rgba(0,0,0,0.30) 0%, rgba(0,0,0,0) 60%);
+        }
+
+        /* Big side number */
+        .svc-side-num {
+          position: absolute;
+          right: 5vw;
+          top: 50%;
+          transform: translateY(-50%);
+          z-index: 2;
+          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-size: clamp(6rem, 14vw, 16rem);
+          font-weight: 200;
+          color: rgba(255,255,255,0.04);
+          line-height: 1;
+          pointer-events: none;
+          user-select: none;
+          letter-spacing: -0.04em;
+        }
+
+        /* Hero text content */
+        .svc-hero-content {
+          position: relative;
+          z-index: 2;
+          padding: 0 6vw 60px;
+          max-width: 800px;
+          width: 100%;
+        }
+
+        .svc-eyebrow {
+          display: block;
+          font-family: 'Inter', sans-serif;
+          font-size: clamp(0.65rem, 1.1vw, 0.8rem);
+          letter-spacing: 0.35em;
+          text-transform: uppercase;
+          color: #c9a063;
+          margin-bottom: 20px;
+          font-weight: 500;
+        }
+
+        .svc-title-wrap {
+          margin-bottom: 24px;
+        }
+
+        .svc-title-line {
+          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-size: clamp(3.8rem, 10vw, 9.5rem);
+          font-weight: 300;
+          line-height: 0.9;
+          color: #f8f6f0;
+          margin: 0;
+          letter-spacing: -0.02em;
+        }
+
+        .svc-tagline {
+          font-family: 'Inter', sans-serif;
+          font-size: clamp(0.85rem, 1.4vw, 1rem);
+          color: rgba(248,246,240,0.55);
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          margin-bottom: 40px;
+          font-weight: 300;
+        }
+
+        /* Progress bar indicators */
+        .svc-progress-bars {
+          display: flex;
+          gap: 10px;
+          align-items: center;
+        }
+        .svc-bar-btn {
+          background: none;
+          border: none;
+          padding: 6px 0;
+          cursor: pointer;
+          width: 56px;
+        }
+        .svc-bar-track {
+          width: 100%;
+          height: 2px;
+          background: rgba(255,255,255,0.18);
+          border-radius: 2px;
+          overflow: hidden;
+        }
+        .svc-bar-fill {
+          height: 100%;
+          background: #c9a063;
+          border-radius: 2px;
+          transition: width 0.1s linear;
+        }
+
+        /* Scroll cue */
+        .svc-scroll-cue {
+          position: absolute;
+          right: 6vw;
+          bottom: 40px;
+          z-index: 2;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 8px;
+        }
+        .svc-scroll-line {
+          width: 1px;
+          height: 70px;
+          background: linear-gradient(to bottom, transparent, #c9a063 30%, transparent 100%);
+          animation: scrollPulse 2.2s ease-in-out infinite;
+        }
+        @keyframes scrollPulse {
+          0%   { transform: scaleY(0.3) translateY(-20px); opacity: 0; }
+          50%  { transform: scaleY(1)   translateY(0);     opacity: 1; }
+          100% { transform: scaleY(0.3) translateY(20px);  opacity: 0; }
+        }
+
+        /* ═══════════════════════════════════════
+           GOLD DIVIDER
+        ═══════════════════════════════════════ */
+        .svc-divider {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+          background: #0a0a0a;
+          padding: 28px 6vw;
+        }
+        .svc-divider-line {
+          flex: 1;
+          height: 1px;
+          background: linear-gradient(to right, transparent, rgba(201,160,99,0.3), transparent);
+        }
+        .svc-divider-label {
+          font-family: 'Inter', sans-serif;
+          font-size: 0.65rem;
+          letter-spacing: 0.4em;
+          text-transform: uppercase;
+          color: rgba(201,160,99,0.55);
+          white-space: nowrap;
+          flex-shrink: 0;
+        }
+
+        /* ═══════════════════════════════════════
+           GALLERY SECTION
+        ═══════════════════════════════════════ */
+        .svc-gallery {
+          background: #0d0d0d;
+          padding: 72px 6vw 96px;
+        }
+
+        /* Head row */
+        .svc-gallery-head {
+          display: flex;
+          align-items: flex-start;
+          gap: 32px;
+          margin-bottom: 56px;
+        }
+        .svc-head-rule {
+          width: 2px;
+          height: 80px;
+          background: linear-gradient(to bottom, #c9a063, transparent);
+          flex-shrink: 0;
+          transform-origin: top;
+        }
+        .svc-head-text {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
+        .svc-head-label {
+          font-family: 'Inter', sans-serif;
+          font-size: 0.7rem;
+          letter-spacing: 0.35em;
+          text-transform: uppercase;
+          color: #c9a063;
+          font-weight: 500;
+        }
+        .svc-head-desc {
+          font-family: 'Inter', sans-serif;
+          font-size: clamp(0.92rem, 1.35vw, 1.05rem);
+          color: rgba(248,246,240,0.48);
+          line-height: 1.85;
+          max-width: 560px;
+          margin: 0;
+        }
+
+        /* Cards grid */
+        .svc-cards-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          grid-template-rows: auto;
+          gap: 12px;
+        }
+
+        @media (max-width: 900px) {
+          .svc-cards-grid { grid-template-columns: repeat(2, 1fr); }
+          .svc-card--wide  { grid-column: span 2; }
+        }
+        @media (max-width: 540px) {
+          .svc-cards-grid { grid-template-columns: 1fr; }
+          .svc-card--wide  { grid-column: span 1; }
+          .svc-hero        { height: 100svh; }
+          .svc-title-line  { font-size: clamp(3rem, 14vw, 4.5rem); }
+        }
+
+        /* Card */
+        .svc-card {
+          position: relative;
+          cursor: pointer;
+          background: #141414;
+          border: 1px solid rgba(255,255,255,0.04);
+          border-radius: 3px;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+          transition: border-color 0.4s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1);
+        }
+        .svc-card:hover {
+          border-color: rgba(201,160,99,0.28);
+          transform: translateY(-6px);
+        }
+        .svc-card--wide {
+          grid-column: span 2;
+        }
+        @media (max-width: 900px) {
+          .svc-card--wide { grid-column: span 2; }
+        }
+
+        .svc-card-media {
+          position: relative;
+          width: 100%;
+          aspect-ratio: 4/3;
+          overflow: hidden;
+        }
+        .svc-card--wide .svc-card-media {
+          aspect-ratio: 21/9;
+        }
+        @media (max-width: 700px) {
+          .svc-card--wide .svc-card-media { aspect-ratio: 4/3; }
+        }
+
+        .svc-card-img {
+          object-fit: cover;
+          transition: transform 0.9s cubic-bezier(0.25,0.46,0.45,0.94);
+        }
+        .svc-card:hover .svc-card-img {
+          transform: scale(1.08);
+        }
+
+        /* Glass overlay */
+        .svc-card-glass {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 55%);
+          transition: opacity 0.4s ease;
+        }
+
+        /* Shine sweep effect */
+        .svc-card-shine {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            105deg,
+            transparent 40%,
+            rgba(201,160,99,0.07) 50%,
+            transparent 60%
+          );
+          background-size: 200% 100%;
+          background-position: 200% 0;
+          transition: background-position 0.7s ease;
+        }
+        .svc-card:hover .svc-card-shine {
+          background-position: -50% 0;
+        }
+
+        /* Card footer */
+        .svc-card-footer {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 14px 18px;
+          background: #0f0f0f;
+          border-top: 1px solid rgba(201,160,99,0.08);
+        }
+        .svc-card-num {
+          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-size: 0.72rem;
+          color: #c9a063;
+          letter-spacing: 0.1em;
+          opacity: 0.75;
+          flex-shrink: 0;
+        }
+        .svc-card-cap {
+          font-family: 'Inter', sans-serif;
+          font-size: 0.78rem;
+          color: rgba(248,246,240,0.55);
+          letter-spacing: 0.06em;
+          flex: 1;
+        }
+        .svc-card-arrow {
+          font-size: 0.9rem;
+          color: rgba(201,160,99,0.35);
+          transform: rotate(0deg);
+          transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .svc-card:hover .svc-card-arrow {
+          color: #c9a063;
+          transform: rotate(45deg);
+        }
+
+        /* ═══════════════════════════════════════
+           SECTION SEPARATOR  (between services)
+        ═══════════════════════════════════════ */
+        .svc-block + .svc-block > .svc-hero::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background: linear-gradient(90deg, transparent 0%, rgba(201,160,99,0.55) 50%, transparent 100%);
+          z-index: 3;
+        }
+      `}</style>
+
+      {servicesData.map((svc, idx) => (
+        <div key={svc.id} className="svc-block" id={`service-${svc.id}`}>
+          <HeroSlideshow images={svc.heroImages} service={svc} />
+          <GoldDivider label={`${svc.number} — ${svc.label} Portfolio`} />
+          <GalleryGrid service={svc} />
         </div>
-      </div>
+      ))}
     </section>
   );
 }
