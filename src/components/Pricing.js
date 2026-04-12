@@ -47,95 +47,272 @@ const packages = [
 ];
 
 export default function Pricing() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
-    }
-  };
-
   return (
-    <section id="pricing" className="bg-[#1a1a1a] text-white relative block w-full overflow-hidden" style={{ paddingTop: '8rem', paddingBottom: '14rem' }}>
-      <div className="container mx-auto px-6">
-        <div className="text-center relative z-10" style={{ marginBottom: '6rem' }}>
-          <span className="text-[#c9a063] font-sans tracking-[0.3em] uppercase text-sm block" style={{ marginBottom: '1rem' }}>Investment</span>
-          <h2 className="font-serif text-4xl md:text-5xl font-light">Curated Packages</h2>
-          <p className="text-white/60 font-sans max-w-xl mx-auto" style={{ marginTop: '1.5rem', marginBottom: '2rem' }}>
+    <section id="pricing" style={{
+      background: '#0d0d0d',
+      width: '100%',
+      display: 'block',
+      position: 'relative',
+      overflow: 'hidden',
+      padding: '120px 0 160px',
+    }}>
+      {/* Ambient glow */}
+      <div style={{
+        position: 'absolute', top: '50%', left: '50%',
+        transform: 'translate(-50%,-50%)',
+        width: '700px', height: '700px',
+        background: 'radial-gradient(ellipse at center, rgba(201,160,99,0.07) 0%, transparent 70%)',
+        pointerEvents: 'none', zIndex: 0
+      }} />
+
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 6vw', position: 'relative', zIndex: 1 }}>
+
+        {/* Header */}
+        <div style={{ textAlign: 'center', marginBottom: '80px' }}>
+          <motion.span
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            style={{
+              display: 'block',
+              fontFamily: "'Inter', sans-serif",
+              fontSize: '0.72rem',
+              letterSpacing: '0.38em',
+              textTransform: 'uppercase',
+              color: '#c9a063',
+              marginBottom: '20px',
+              fontWeight: 500,
+            }}
+          >
+            Investment
+          </motion.span>
+
+          <div style={{ overflow: 'hidden' }}>
+            <motion.h2
+              initial={{ y: '110%', opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+              style={{
+                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontSize: 'clamp(2.6rem, 5.5vw, 4.5rem)',
+                fontWeight: 300,
+                color: '#f8f6f0',
+                margin: 0,
+                lineHeight: 1,
+              }}
+            >
+              Curated Packages
+            </motion.h2>
+          </div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: 'clamp(0.88rem, 1.3vw, 1rem)',
+              color: 'rgba(248,246,240,0.45)',
+              maxWidth: '520px',
+              margin: '28px auto 0',
+              lineHeight: 1.8,
+            }}
+          >
             Transparent pricing for an unparalleled visual narrative. Select the collection that best aligns with your vision.
-          </p>
+          </motion.p>
         </div>
 
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 relative z-10 max-w-6xl mx-auto items-stretch"
-          style={{ marginTop: '2rem' }}
-        >
+        {/* Cards */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gap: '20px',
+          alignItems: 'stretch',
+        }}>
           {packages.map((pkg, index) => (
-            <motion.div 
+            <motion.div
               key={index}
-              variants={cardVariants}
-              whileHover={{ y: -10, boxShadow: "0px 20px 40px rgba(0,0,0,0.4)" }}
-              className={`relative flex flex-col p-10 h-auto rounded-sm transition-all duration-300 ${
-                pkg.highlighted 
-                  ? 'bg-gradient-to-b from-[#2a2a2a] to-[#1a1a1a] border border-[#c9a063]/50 shadow-[0_0_40px_rgba(201,160,99,0.15)] md:scale-110 z-20 py-14' 
-                  : 'bg-[#222] border border-white/10'
-              }`}
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.9, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -10 }}
+              style={{
+                position: 'relative',
+                display: 'flex',
+                flexDirection: 'column',
+                padding: pkg.highlighted ? '48px 36px' : '40px 36px',
+                background: pkg.highlighted
+                  ? 'linear-gradient(145deg, #1e1c16 0%, #161410 100%)'
+                  : '#141414',
+                border: pkg.highlighted
+                  ? '1px solid rgba(201,160,99,0.45)'
+                  : '1px solid rgba(255,255,255,0.07)',
+                borderRadius: '4px',
+                boxShadow: pkg.highlighted
+                  ? '0 0 60px rgba(201,160,99,0.12), 0 30px 60px rgba(0,0,0,0.4)'
+                  : '0 10px 40px rgba(0,0,0,0.25)',
+                transform: pkg.highlighted ? 'scale(1.04)' : 'scale(1)',
+                zIndex: pkg.highlighted ? 2 : 1,
+                transition: 'box-shadow 0.4s ease',
+              }}
             >
+              {/* Most Popular badge */}
               {pkg.highlighted && (
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#c9a063] text-black text-xs font-bold uppercase tracking-[0.2em] py-1 px-4 rounded-sm">
+                <div style={{
+                  position: 'absolute',
+                  top: '-14px',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  background: '#c9a063',
+                  color: '#0d0d0d',
+                  fontSize: '0.62rem',
+                  fontFamily: "'Inter', sans-serif",
+                  fontWeight: 700,
+                  letterSpacing: '0.22em',
+                  textTransform: 'uppercase',
+                  padding: '5px 18px',
+                  borderRadius: '20px',
+                  whiteSpace: 'nowrap',
+                }}>
                   Most Popular
                 </div>
               )}
-              
-              <h3 className="font-serif text-3xl font-light mb-2">{pkg.name}</h3>
-              <p className="text-white/50 text-sm h-12 mb-6">{pkg.description}</p>
-              
-              <div className="mb-8">
-                <span className="font-serif text-5xl font-light">{pkg.price}</span>
+
+              {/* Package name */}
+              <div style={{
+                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontSize: 'clamp(1.6rem, 2.5vw, 2rem)',
+                fontWeight: 300,
+                color: '#f8f6f0',
+                marginBottom: '8px',
+              }}>
+                {pkg.name}
               </div>
-              
-              <ul className="flex-grow space-y-4 mb-10">
+
+              {/* Description */}
+              <p style={{
+                fontFamily: "'Inter', sans-serif",
+                fontSize: '0.83rem',
+                color: 'rgba(248,246,240,0.4)',
+                lineHeight: 1.65,
+                marginBottom: '28px',
+                minHeight: '52px',
+              }}>
+                {pkg.description}
+              </p>
+
+              {/* Price */}
+              <div style={{ marginBottom: '32px' }}>
+                <span style={{
+                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontSize: 'clamp(2.8rem, 4vw, 3.8rem)',
+                  fontWeight: 200,
+                  color: pkg.highlighted ? '#c9a063' : '#f8f6f0',
+                  lineHeight: 1,
+                }}>
+                  {pkg.price}
+                </span>
+              </div>
+
+              {/* Gold rule */}
+              <div style={{
+                height: '1px',
+                background: pkg.highlighted
+                  ? 'linear-gradient(90deg, transparent, rgba(201,160,99,0.6), transparent)'
+                  : 'rgba(255,255,255,0.07)',
+                marginBottom: '28px',
+              }} />
+
+              {/* Features */}
+              <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 36px', flexGrow: 1 }}>
                 {pkg.features.map((feature, i) => (
-                  <li key={i} className="flex items-start text-white/80 text-sm">
-                    <svg className="w-5 h-5 text-[#c9a063] mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>{feature}</span>
+                  <li key={i} style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: '0.83rem',
+                    color: 'rgba(248,246,240,0.62)',
+                    padding: '9px 0',
+                    borderBottom: '1px solid rgba(255,255,255,0.04)',
+                  }}>
+                    <span style={{
+                      color: '#c9a063',
+                      fontSize: '0.6rem',
+                      flexShrink: 0,
+                    }}>◆</span>
+                    {feature}
                   </li>
                 ))}
               </ul>
-              
-              <button 
-                className={`w-full py-4 text-sm tracking-widest uppercase transition-all duration-300 ${
-                  pkg.highlighted
-                    ? 'bg-[#c9a063] text-black hover:bg-white'
-                    : 'bg-transparent text-white border border-white/30 hover:border-white hover:bg-white hover:text-black'
-                }`}
+
+              {/* CTA button */}
+              <button style={{
+                width: '100%',
+                padding: '15px 0',
+                fontFamily: "'Inter', sans-serif",
+                fontSize: '0.72rem',
+                fontWeight: 600,
+                letterSpacing: '0.25em',
+                textTransform: 'uppercase',
+                cursor: 'pointer',
+                border: pkg.highlighted ? 'none' : '1px solid rgba(255,255,255,0.18)',
+                borderRadius: '2px',
+                background: pkg.highlighted
+                  ? 'linear-gradient(135deg, #c9a063 0%, #d4a96b 100%)'
+                  : 'transparent',
+                color: pkg.highlighted ? '#0d0d0d' : 'rgba(248,246,240,0.6)',
+                transition: 'all 0.35s ease',
+              }}
+                onMouseEnter={e => {
+                  if (pkg.highlighted) { e.target.style.background = '#d4b87a'; }
+                  else { e.target.style.borderColor = 'rgba(201,160,99,0.6)'; e.target.style.color = '#c9a063'; }
+                }}
+                onMouseLeave={e => {
+                  if (pkg.highlighted) { e.target.style.background = 'linear-gradient(135deg, #c9a063 0%, #d4a96b 100%)'; }
+                  else { e.target.style.borderColor = 'rgba(255,255,255,0.18)'; e.target.style.color = 'rgba(248,246,240,0.6)'; }
+                }}
               >
                 Choose Plan
               </button>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
+
+        {/* Bottom note */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, delay: 0.6 }}
+          style={{
+            textAlign: 'center',
+            fontFamily: "'Inter', sans-serif",
+            fontSize: '0.75rem',
+            color: 'rgba(248,246,240,0.25)',
+            letterSpacing: '0.08em',
+            marginTop: '52px',
+          }}
+        >
+          All packages include photo editing & private online gallery. Custom quotes available.
+        </motion.p>
       </div>
 
-      {/* Subtle background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#c9a063]/5 rounded-full blur-[100px] pointer-events-none" />
+      {/* Responsive grid fix */}
+      <style>{`
+        @media (max-width: 860px) {
+          #pricing .pkg-grid {
+            grid-template-columns: 1fr !important;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+          }
+        }
+      `}</style>
     </section>
   );
 }
