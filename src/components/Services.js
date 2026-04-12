@@ -71,46 +71,100 @@ const servicesData = [
   },
 ];
 
-/* ─── Text split reveal ─────────────────────────────────────────────────── */
-function SplitReveal({ children, delay = 0, className = "" }) {
+/* ─── Hero Slideshow ──────────────────────────────────────────────────────── */
+function HeroSlideshow({ images, service }) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [leavingIndex, setLeavingIndex] = useState(null);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      advance((currentIndex + 1) % images.length);
+    }, 6000); // 6s match animation
+    return () => clearInterval(timer);
+  }, [currentIndex, images.length]);
+
+  const advance = (idx) => {
+    if (idx === currentIndex) return;
+    setLeavingIndex(currentIndex);
+    setCurrentIndex(idx);
+    setTimeout(() => setLeavingIndex(null), 1200);
+  };
+
   return (
-    <motion.div 
-      ref={ref}
-      style={{ opacity, scale }}
-      className={`min-h-[80vh] flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-10 lg:gap-20 mb-32`}
-    >
-      <div className="w-full lg:w-1/2 flex flex-col justify-center">
-        <span className="text-[#c9a063] font-sans tracking-[0.3em] uppercase text-sm mb-4">0{index + 1} / Service</span>
-        <h2 className="font-serif text-5xl md:text-6xl text-[#1a1a1a] mb-8 font-light">
-          {service.title}
-        </h2>
-        <p className="text-[#666666] font-sans leading-relaxed text-lg mb-10 max-w-xl">
-          {service.description}
-        </p>
-        
-        <div className="flex gap-4">
-          {service.gallery.map((img, i) => (
-            <motion.div 
-              key={i}
-              className="svc-bar-btn"
-              onClick={() => advance(i)}
-              aria-label={`Slide ${i + 1}`}
-            >
-              <Image src={img} alt={`${service.title} gallery ${i}`} fill className="object-cover" />
-              <div className="absolute inset-0 bg-black/10 hover:bg-transparent transition-colors duration-300" />
-            </motion.div>
+    <div className="svc-hero">
+      {images.map((img, idx) => {
+        let sc = "svc-slide";
+        if (idx === currentIndex) sc += " is-active";
+        else if (idx === leavingIndex) sc += " is-leaving";
+
+        return (
+          <div key={idx} className={sc}>
+            <Image src={img} alt={`${service.label} ${idx}`} fill className="svc-slide-img" priority={idx === 0} />
+          </div>
+        );
+      })}
+
+      <div className="svc-vignette" />
+      <div className="svc-side-num">{service.number}</div>
+
+      <div className="svc-hero-content">
+        <span className="svc-eyebrow">0{service.number} / {service.label}</span>
+        <div className="svc-title-wrap">
+          {service.title.map((line, i) => (
+            <h2 key={i} className="svc-title-line">{line}</h2>
+          ))}
+        </div>
+        <div className="svc-tagline">{service.tagline}</div>
+
+        <div className="svc-progress-bars">
+          {images.map((_, idx) => (
+            <button key={idx} className="svc-bar-btn" onClick={() => advance(idx)} aria-label={`Slide ${idx + 1}`}>
+              <div className="svc-bar-track">
+                <div 
+                  className="svc-bar-fill" 
+                  style={{ width: idx === currentIndex ? '100%' : '0%' }}
+                />
+              </div>
+            </button>
           ))}
         </div>
       </div>
 
-      <div className="w-full lg:w-1/2 h-[60vh] lg:h-[80vh] relative overflow-hidden rounded-sm shadow-2xl">
-        <Image 
-          src={service.image} 
-          alt={service.title} 
-          fill 
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+      <div className="svc-scroll-cue">
+        <span style={{ fontFamily: 'Inter', fontSize: '0.65rem', color: '#c9a063', textTransform: 'uppercase', letterSpacing: '0.2em' }}>Scroll</span>
+        <div className="svc-scroll-line" />
+      </div>
+    </div>
+  );
+}
+
+/* ─── Gallery Grid ──────────────────────────────────────────────────────── */
+function GalleryGrid({ service }) {
+  return (
+    <div className="svc-gallery">
+      <div className="svc-gallery-head">
+        <div className="svc-head-rule" />
+        <div className="svc-head-text">
+          <span className="svc-head-label">Curated Selection</span>
+          <p className="svc-head-desc">{service.description}</p>
+        </div>
+      </div>
+
+      <div className="svc-cards-grid">
+        {service.gallery.map((item, idx) => (
+          <div key={idx} className={`svc-card ${item.span === 'wide' ? 'svc-card--wide' : ''}`}>
+            <div className="svc-card-media">
+              <Image src={item.src} alt={item.caption} fill className="svc-card-img" />
+              <div className="svc-card-glass" />
+              <div className="svc-card-shine" />
+            </div>
+            <div className="svc-card-footer">
+              <span className="svc-card-num">0{idx + 1}</span>
+              <span className="svc-card-cap">{item.caption}</span>
+              <span className="svc-card-arrow">↗</span>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
