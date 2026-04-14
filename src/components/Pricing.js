@@ -49,7 +49,7 @@ const packages = [
 export default function Pricing() {
   return (
     <section id="pricing" style={{
-      background: '#0d0d0d',
+      background: 'var(--bg-color)',
       width: '100%',
       display: 'block',
       position: 'relative',
@@ -98,7 +98,7 @@ export default function Pricing() {
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
                 fontSize: 'clamp(2.6rem, 5.5vw, 4.5rem)',
                 fontWeight: 300,
-                color: '#f8f6f0',
+                color: 'var(--text-primary)',
                 margin: 0,
                 lineHeight: 1,
               }}
@@ -115,7 +115,7 @@ export default function Pricing() {
             style={{
               fontFamily: "'Inter', sans-serif",
               fontSize: 'clamp(0.88rem, 1.3vw, 1rem)',
-              color: 'rgba(248,246,240,0.45)',
+              color: 'var(--text-secondary)',
               maxWidth: '520px',
               margin: '28px auto 0',
               lineHeight: 1.8,
@@ -146,11 +146,11 @@ export default function Pricing() {
                 flexDirection: 'column',
                 padding: pkg.highlighted ? '48px 36px' : '40px 36px',
                 background: pkg.highlighted
-                  ? 'linear-gradient(145deg, #1e1c16 0%, #161410 100%)'
-                  : '#141414',
+                  ? 'var(--bg-color)'
+                  : 'var(--surface-bg)',
                 border: pkg.highlighted
-                  ? '1px solid rgba(201,160,99,0.45)'
-                  : '1px solid rgba(255,255,255,0.07)',
+                  ? '1px solid var(--accent-color)'
+                  : '1px solid var(--border-color)',
                 borderRadius: '4px',
                 boxShadow: pkg.highlighted
                   ? '0 0 60px rgba(201,160,99,0.12), 0 30px 60px rgba(0,0,0,0.4)'
@@ -187,7 +187,7 @@ export default function Pricing() {
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
                 fontSize: 'clamp(1.6rem, 2.5vw, 2rem)',
                 fontWeight: 300,
-                color: '#f8f6f0',
+                color: 'var(--text-primary)',
                 marginBottom: '8px',
               }}>
                 {pkg.name}
@@ -197,7 +197,7 @@ export default function Pricing() {
               <p style={{
                 fontFamily: "'Inter', sans-serif",
                 fontSize: '0.83rem',
-                color: 'rgba(248,246,240,0.4)',
+                color: 'var(--text-secondary)',
                 lineHeight: 1.65,
                 marginBottom: '28px',
                 minHeight: '52px',
@@ -211,7 +211,7 @@ export default function Pricing() {
                   fontFamily: "'Cormorant Garamond', Georgia, serif",
                   fontSize: 'clamp(2.8rem, 4vw, 3.8rem)',
                   fontWeight: 200,
-                  color: pkg.highlighted ? '#c9a063' : '#f8f6f0',
+                  color: pkg.highlighted ? 'var(--accent-color)' : 'var(--text-primary)',
                   lineHeight: 1,
                 }}>
                   {pkg.price}
@@ -222,8 +222,8 @@ export default function Pricing() {
               <div style={{
                 height: '1px',
                 background: pkg.highlighted
-                  ? 'linear-gradient(90deg, transparent, rgba(201,160,99,0.6), transparent)'
-                  : 'rgba(255,255,255,0.07)',
+                  ? 'linear-gradient(90deg, transparent, var(--accent-color), transparent)'
+                  : 'var(--border-color)',
                 marginBottom: '28px',
               }} />
 
@@ -236,9 +236,9 @@ export default function Pricing() {
                     gap: '12px',
                     fontFamily: "'Inter', sans-serif",
                     fontSize: '0.83rem',
-                    color: 'rgba(248,246,240,0.62)',
+                    color: 'var(--text-secondary)',
                     padding: '9px 0',
-                    borderBottom: '1px solid rgba(255,255,255,0.04)',
+                    borderBottom: '1px solid var(--border-color)',
                   }}>
                     <span style={{
                       color: '#c9a063',
@@ -263,9 +263,9 @@ export default function Pricing() {
                 border: pkg.highlighted ? 'none' : '1px solid rgba(255,255,255,0.18)',
                 borderRadius: '2px',
                 background: pkg.highlighted
-                  ? 'linear-gradient(135deg, #c9a063 0%, #d4a96b 100%)'
+                  ? 'var(--accent-color)'
                   : 'transparent',
-                color: pkg.highlighted ? '#0d0d0d' : 'rgba(248,246,240,0.6)',
+                color: pkg.highlighted ? 'var(--bg-color)' : 'var(--text-secondary)',
                 transition: 'all 0.35s ease',
               }}
                 onMouseEnter={e => {
@@ -293,7 +293,7 @@ export default function Pricing() {
             textAlign: 'center',
             fontFamily: "'Inter', sans-serif",
             fontSize: '0.75rem',
-            color: 'rgba(248,246,240,0.25)',
+            color: 'var(--text-secondary)',
             letterSpacing: '0.08em',
             marginTop: '52px',
           }}

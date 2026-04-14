@@ -4,16 +4,32 @@
   :root {
     --font-sans: var(--font-inter), "Inter", ui-sans-serif, system-ui, sans-serif;
     --font-serif: var(--font-playfair), "Georgia", ui-serif, serif;
-    --bg-color: #f8f6f0; /* Soft warm luxury beige */
+    /* Light Mode */
+    --bg-color: #f8f6f0;
+    --surface-bg: #ffffff;
     --text-primary: #1a1a1a;
     --text-secondary: #666666;
-    --accent-color: #c9a063; /* Subtle gold accent */
+    --accent-color: #c9a063;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --glass-bg: rgba(255, 255, 255, 0.5);
+  }
+
+  .dark {
+    /* Dark Mode */
+    --bg-color: #0a0a0a;
+    --surface-bg: #141414;
+    --text-primary: #f8f6f0;
+    --text-secondary: rgba(255, 255, 255, 0.5);
+    --accent-color: #c9a063;
+    --border-color: rgba(255, 255, 255, 0.05);
+    --glass-bg: rgba(0, 0, 0, 0.5);
   }
 
   body {
     background-color: var(--bg-color);
     color: var(--text-primary);
     overflow-x: hidden;
+    transition: background-color 0.5s ease, color 0.5s ease;
   }
 }
 

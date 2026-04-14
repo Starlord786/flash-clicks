@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import ThemeToggle from './ThemeToggle';
 
 const navLinks = [
   { title: 'Home', href: '#top' },
@@ -36,18 +37,16 @@ export default function Navbar() {
         <div 
           className={`flex justify-between items-center w-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
             scrolled 
-              ? 'max-w-4xl bg-white/90 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-black/5 rounded-full px-8 py-4' 
-              : 'max-w-[1400px] bg-transparent text-white'
+              ? 'max-w-4xl bg-[var(--surface-bg)]/90 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-[var(--border-color)] rounded-full px-8 py-4' 
+              : 'max-w-[1400px] bg-transparent text-[var(--text-primary)]'
           }`}
         >
           {/* Logo */}
           <a 
             href="#top" 
-            className={`font-serif text-2xl md:text-3xl font-light tracking-wide hover:opacity-70 transition-opacity ${
-              scrolled ? 'text-black' : 'text-white'
-            }`}
+            className={`font-serif text-2xl md:text-3xl font-light tracking-wide hover:opacity-70 transition-opacity text-[var(--text-primary)]`}
           >
-            Flash<span className={scrolled ? 'text-[#c9a063]' : 'text-white/70'}>Clicks.</span>
+            Flash<span className={scrolled ? 'text-[var(--accent-color)]' : 'opacity-70'}>Clicks.</span>
           </a>
 
           {/* Desktop Nav Links */}
@@ -56,13 +55,13 @@ export default function Navbar() {
               <a
                 key={link.title}
                 href={link.href}
-                className={`text-sm tracking-[0.15em] uppercase font-medium relative group overflow-hidden ${
-                  scrolled ? 'text-[#666] hover:text-black' : 'text-white/80 hover:text-white'
-                } transition-colors`}
+                className={`text-sm tracking-[0.15em] uppercase font-medium relative group overflow-hidden transition-colors ${
+                  scrolled ? 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]' : 'text-[var(--text-primary)] opacity-80 hover:opacity-100'
+                }`}
               >
                 {link.title}
                 <span className={`absolute bottom-0 left-0 w-full h-[1px] transform origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100 ${
-                  scrolled ? 'bg-[#c9a063]' : 'bg-white'
+                  scrolled ? 'bg-[var(--accent-color)]' : 'bg-[var(--text-primary)]'
                 }`} />
               </a>
             ))}
@@ -70,12 +69,14 @@ export default function Navbar() {
 
           {/* Action / Menu area */}
           <div className="flex items-center gap-6">
+            <ThemeToggle />
+            
             <a 
               href="#contact"
               className={`hidden lg:flex px-6 py-2.5 rounded-full text-xs font-semibold tracking-widest uppercase transition-all duration-300 ${
                 scrolled 
-                  ? 'bg-black text-white hover:bg-[#c9a063] hover:text-white' 
-                  : 'bg-white/10 backdrop-blur-sm text-white hover:bg-white hover:text-black border border-white/20'
+                  ? 'bg-[var(--text-primary)] text-[var(--bg-color)] hover:bg-[var(--accent-color)] hover:text-[var(--bg-color)]' 
+                  : 'bg-[var(--text-primary)]/10 backdrop-blur-sm text-[var(--text-primary)] hover:bg-[var(--text-primary)] hover:text-[var(--bg-color)] border border-[var(--text-primary)]/20'
               }`}
             >
               Book Studio
@@ -85,21 +86,21 @@ export default function Navbar() {
             <button 
               onClick={() => setMenuOpen(!menuOpen)}
               className={`flex flex-col justify-center items-center gap-[6px] w-10 h-10 rounded-full transition-colors ${
-                scrolled ? 'bg-black/5 hover:bg-black/10' : 'bg-black/20 hover:bg-black/40 backdrop-blur-sm'
+                scrolled ? 'bg-[var(--text-primary)]/5 hover:bg-[var(--text-primary)]/10' : 'bg-[var(--text-primary)]/20 hover:bg-[var(--text-primary)]/40 backdrop-blur-sm'
               }`}
               aria-label="Menu"
             >
               <motion.span 
                 animate={menuOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
-                className={`block w-5 h-[1.5px] ${scrolled || menuOpen ? 'bg-black' : 'bg-white'} transition-colors ease-out`}
+                className={`block w-5 h-[1.5px] bg-[var(--text-primary)] transition-colors ease-out`}
               />
               <motion.span 
                 animate={menuOpen ? { opacity: 0 } : { opacity: 1 }}
-                className={`block w-5 h-[1.5px] ${scrolled || menuOpen ? 'bg-black' : 'bg-white'} transition-colors ease-out`}
+                className={`block w-5 h-[1.5px] bg-[var(--text-primary)] transition-colors ease-out`}
               />
               <motion.span 
                 animate={menuOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
-                className={`block w-5 h-[1.5px] ${scrolled || menuOpen ? 'bg-black' : 'bg-white'} transition-colors ease-out`}
+                className={`block w-5 h-[1.5px] bg-[var(--text-primary)] transition-colors ease-out`}
               />
             </button>
           </div>
@@ -114,10 +115,10 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-40 bg-[#f8f6f0] flex"
+            className="fixed inset-0 z-40 bg-[var(--bg-color)] flex"
           >
             {/* Decorative Left Side */}
-            <div className="hidden lg:block w-1/2 h-full bg-[#1a1a1a] relative overflow-hidden">
+            <div className="hidden lg:block w-1/2 h-full bg-[var(--surface-bg)] relative overflow-hidden">
               <motion.img 
                 initial={{ scale: 1.1, opacity: 0 }}
                 animate={{ scale: 1, opacity: 0.5 }}
@@ -127,7 +128,7 @@ export default function Navbar() {
                 alt="Studio menu background"
               />
               <div className="absolute inset-0 flex items-center justify-center">
-                <p className="text-white/20 font-serif text-8xl font-light italic">Studio.</p>
+                <p className="text-[var(--text-primary)]/20 font-serif text-8xl font-light italic">Studio.</p>
               </div>
             </div>
 
@@ -152,7 +153,7 @@ export default function Navbar() {
                         <span className="text-sm font-sans tracking-[0.2em] text-[#c9a063] mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                           0{i + 1}
                         </span>
-                        <span className="font-serif text-5xl md:text-7xl font-light text-[#1a1a1a] group-hover:italic group-hover:text-[#c9a063] transition-all duration-500">
+                        <span className="font-serif text-5xl md:text-7xl font-light text-[var(--text-primary)] group-hover:italic group-hover:text-[var(--accent-color)] transition-all duration-500">
                           {item.title}
                         </span>
                       </div>
@@ -165,17 +166,17 @@ export default function Navbar() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.8 }}
-                className="mt-20 flex flex-col sm:flex-row gap-12 border-t border-[#1a1a1a]/10 pt-10"
+                className="mt-20 flex flex-col sm:flex-row gap-12 border-t border-[var(--border-color)] pt-10"
               >
                 <div>
-                  <h4 className="text-xs uppercase tracking-widest text-[#666] mb-3">Get in Touch</h4>
-                  <a href="mailto:hello@flashclicks.com" className="text-[#1a1a1a] font-serif text-lg hover:text-[#c9a063] transition-colors">hello@flashclicks.com</a>
+                  <h4 className="text-xs uppercase tracking-widest text-[var(--text-secondary)] mb-3">Get in Touch</h4>
+                  <a href="mailto:hello@flashclicks.com" className="text-[var(--text-primary)] font-serif text-lg hover:text-[var(--accent-color)] transition-colors">hello@flashclicks.com</a>
                 </div>
                 <div>
-                  <h4 className="text-xs uppercase tracking-widest text-[#666] mb-3">Socials</h4>
+                  <h4 className="text-xs uppercase tracking-widest text-[var(--text-secondary)] mb-3">Socials</h4>
                   <div className="flex gap-4">
                     {['Instagram', 'Pinterest'].map(social => (
-                      <a key={social} href="#" className="text-[#1a1a1a] text-sm uppercase tracking-wider hover:text-[#c9a063] transition-colors">{social}</a>
+                      <a key={social} href="#" className="text-[var(--text-primary)] text-sm uppercase tracking-wider hover:text-[var(--accent-color)] transition-colors">{social}</a>
                     ))}
                   </div>
                 </div>

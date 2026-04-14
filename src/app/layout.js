@@ -1,5 +1,6 @@
 import './globals.css';
 import { Inter, Playfair_Display } from 'next/font/google';
+import { ThemeProvider } from '../components/ThemeContext';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const playfair = Playfair_Display({ 
@@ -15,9 +16,11 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
-      <body className="font-sans antialiased bg-[#f8f6f0] text-[#1a1a1a] selection:bg-[#c9a063] selection:text-white">
-        {children}
+    <html lang="en" className={`${inter.variable} ${playfair.variable} dark`}>
+      <body className="font-sans antialiased selection:bg-[#c9a063] selection:text-white transition-colors duration-500">
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

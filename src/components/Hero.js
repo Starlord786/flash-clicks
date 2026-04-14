@@ -36,7 +36,7 @@ export default function Hero() {
   };
 
   return (
-    <section id="home" className="relative h-screen w-full overflow-hidden bg-black flex items-center justify-center">
+    <section id="home" className="relative h-screen w-full overflow-hidden flex items-center justify-center bg-[var(--bg-color)]">
       {/* Background Images with Slow Motion Ken Burns effect */}
       <AnimatePresence mode="popLayout">
         <motion.div
@@ -61,8 +61,8 @@ export default function Hero() {
         </motion.div>
       </AnimatePresence>
 
-      {/* Dark Overlay with Heavy Cinematic Vignette Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/30 to-black/90 z-10" />
+      {/* Dynamic Overlay with Cinematic Vignette Gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg-color)] via-transparent to-[var(--bg-color)] opacity-90 z-10" />
 
       {/* Hero Content */}
       <div className="relative z-20 container mx-auto px-6 h-full flex flex-col justify-center items-center text-center">
@@ -72,14 +72,14 @@ export default function Hero() {
           initial={{ opacity: 0, scale: 0.95, y: 30 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 1.5, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="relative px-8 py-16 md:px-24 md:py-20 border border-white/10 bg-black/20 backdrop-blur-md shadow-[0_0_100px_rgba(201,160,99,0.15)] rounded-2xl flex flex-col items-center max-w-4xl overflow-hidden group"
+          className="relative px-8 py-16 md:px-24 md:py-20 border border-[var(--border-color)] bg-[var(--glass-bg)] backdrop-blur-md shadow-[0_0_100px_rgba(201,160,99,0.15)] rounded-2xl flex flex-col items-center max-w-4xl overflow-hidden group"
         >
           {/* Subtle animated light sweep on hover */}
           <motion.div 
             initial={{ x: "-100%" }}
             whileHover={{ x: "100%" }}
             transition={{ duration: 1.5, ease: "easeInOut" }}
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-12 pointer-events-none" 
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-[var(--text-primary)]/10 to-transparent skew-x-12 pointer-events-none" 
           />
 
           {/* Letter by Letter Title Reveal */}
@@ -87,13 +87,13 @@ export default function Hero() {
             variants={titleVariants}
             initial="hidden"
             animate="visible"
-            className="font-serif text-5xl md:text-8xl lg:text-9xl text-white font-light tracking-wide mb-8 flex overflow-hidden justify-center items-center"
+            className="font-serif text-5xl md:text-8xl lg:text-9xl text-[var(--text-primary)] font-light tracking-wide mb-8 flex overflow-hidden justify-center items-center"
           >
             {titleText.split('').map((char, index) => (
               <motion.span 
                 key={index} 
                 variants={letterVariants}
-                className={index >= 5 ? "font-sans font-thin text-white/70" : "text-white"}
+                className={index >= 5 ? "font-sans font-thin text-[var(--text-secondary)]" : "text-[var(--text-primary)]"}
               >
                 {char}
               </motion.span>
@@ -121,20 +121,20 @@ export default function Hero() {
               href="#services" 
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
-              className="relative overflow-hidden group px-10 py-5 text-xs tracking-[0.2em] uppercase text-white border border-white hover:border-[#c9a063] transition-colors duration-500 w-full sm:w-auto text-center rounded-sm"
+              className="relative overflow-hidden group px-10 py-5 text-xs tracking-[0.2em] uppercase text-[var(--text-primary)] border border-[var(--text-primary)] hover:border-[var(--accent-color)] transition-colors duration-500 w-full sm:w-auto text-center rounded-sm"
             >
-              <span className="relative z-10 group-hover:text-black transition-colors duration-500 font-semibold">Our Expertise</span>
-              <div className="absolute inset-0 bg-[#c9a063] transform scale-y-0 origin-bottom group-hover:scale-y-100 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
+              <span className="relative z-10 group-hover:text-[var(--bg-color)] transition-colors duration-500 font-semibold">Our Expertise</span>
+              <div className="absolute inset-0 bg-[var(--accent-color)] transform scale-y-0 origin-bottom group-hover:scale-y-100 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
             </motion.a>
             
             <motion.a 
               href="#contact" 
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
-              className="relative overflow-hidden group px-10 py-5 text-xs tracking-[0.2em] uppercase text-black bg-white border border-white hover:border-[#c9a063] transition-colors duration-500 w-full sm:w-auto text-center rounded-sm"
+              className="relative overflow-hidden group px-10 py-5 text-xs tracking-[0.2em] uppercase text-[var(--bg-color)] bg-[var(--text-primary)] border border-[var(--text-primary)] hover:border-[var(--accent-color)] transition-colors duration-500 w-full sm:w-auto text-center rounded-sm"
             >
-              <span className="relative z-10 group-hover:text-black transition-colors duration-500 font-semibold">Book Studio</span>
-              <div className="absolute inset-0 bg-[#c9a063] transform scale-y-0 origin-bottom group-hover:scale-y-100 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
+              <span className="relative z-10 group-hover:text-[var(--bg-color)] transition-colors duration-500 font-semibold">Book Studio</span>
+              <div className="absolute inset-0 bg-[var(--accent-color)] transform scale-y-0 origin-bottom group-hover:scale-y-100 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
             </motion.a>
           </motion.div>
         </motion.div>
@@ -147,11 +147,11 @@ export default function Hero() {
         transition={{ delay: 2.8, duration: 1.5 }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-6"
       >
-        <span className="text-white/40 text-[10px] tracking-[0.4em] uppercase" style={{ writingMode: 'vertical-rl' }}>Explore</span>
+        <span className="text-[var(--text-secondary)] text-[10px] tracking-[0.4em] uppercase" style={{ writingMode: 'vertical-rl' }}>Explore</span>
         <motion.div 
           animate={{ y: [0, 20, 0], opacity: [0.3, 1, 0.3] }}
           transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
-          className="w-[1px] h-20 bg-gradient-to-b from-white to-transparent"
+          className="w-[1px] h-20 bg-gradient-to-b from-[var(--text-primary)] to-transparent"
         />
       </motion.div>
     </section>

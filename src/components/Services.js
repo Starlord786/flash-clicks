@@ -99,7 +99,7 @@ function HeroSlideshow({ images, service }) {
 
         return (
           <div key={idx} className={sc}>
-            <Image src={img} alt={`${service.label} ${idx}`} fill className="svc-slide-img" priority={idx === 0} />
+            <Image src={img} alt={`${service.label} ${idx}`} fill sizes="100vw" className="svc-slide-img" priority={idx === 0} />
           </div>
         );
       })}
@@ -154,7 +154,7 @@ function GalleryGrid({ service }) {
         {service.gallery.map((item, idx) => (
           <div key={idx} className={`svc-card ${item.span === 'wide' ? 'svc-card--wide' : ''}`}>
             <div className="svc-card-media">
-              <Image src={item.src} alt={item.caption} fill className="svc-card-img" />
+              <Image src={item.src} alt={item.caption} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="svc-card-img" />
               <div className="svc-card-glass" />
               <div className="svc-card-shine" />
             </div>
@@ -253,7 +253,7 @@ export default function Services() {
           font-family: 'Cormorant Garamond', Georgia, serif;
           font-size: clamp(6rem, 14vw, 16rem);
           font-weight: 200;
-          color: rgba(255,255,255,0.04);
+          color: var(--border-color);
           line-height: 1;
           pointer-events: none;
           user-select: none;
@@ -289,7 +289,7 @@ export default function Services() {
           font-size: clamp(3.8rem, 10vw, 9.5rem);
           font-weight: 300;
           line-height: 0.9;
-          color: #f8f6f0;
+          color: var(--text-primary);
           margin: 0;
           letter-spacing: -0.02em;
         }
@@ -297,7 +297,7 @@ export default function Services() {
         .svc-tagline {
           font-family: 'Inter', sans-serif;
           font-size: clamp(0.85rem, 1.4vw, 1rem);
-          color: rgba(248,246,240,0.55);
+          color: var(--text-secondary);
           letter-spacing: 0.12em;
           text-transform: uppercase;
           margin-bottom: 40px;
@@ -361,7 +361,7 @@ export default function Services() {
           display: flex;
           align-items: center;
           gap: 20px;
-          background: #0a0a0a;
+          background: var(--bg-color);
           padding: 28px 6vw;
         }
         .svc-divider-line {
@@ -383,7 +383,7 @@ export default function Services() {
            GALLERY SECTION
         ═══════════════════════════════════════ */
         .svc-gallery {
-          background: #0d0d0d;
+          background: var(--bg-color);
           padding: 72px 6vw 96px;
         }
 
@@ -417,7 +417,7 @@ export default function Services() {
         .svc-head-desc {
           font-family: 'Inter', sans-serif;
           font-size: clamp(0.92rem, 1.35vw, 1.05rem);
-          color: rgba(248,246,240,0.48);
+          color: var(--text-secondary);
           line-height: 1.85;
           max-width: 560px;
           margin: 0;
@@ -446,8 +446,8 @@ export default function Services() {
         .svc-card {
           position: relative;
           cursor: pointer;
-          background: #141414;
-          border: 1px solid rgba(255,255,255,0.04);
+          background: var(--surface-bg);
+          border: 1px solid var(--border-color);
           border-radius: 3px;
           overflow: hidden;
           display: flex;
@@ -518,8 +518,8 @@ export default function Services() {
           align-items: center;
           gap: 12px;
           padding: 14px 18px;
-          background: #0f0f0f;
-          border-top: 1px solid rgba(201,160,99,0.08);
+          background: var(--surface-bg);
+          border-top: 1px solid var(--border-color);
         }
         .svc-card-num {
           font-family: 'Cormorant Garamond', Georgia, serif;
@@ -532,7 +532,7 @@ export default function Services() {
         .svc-card-cap {
           font-family: 'Inter', sans-serif;
           font-size: 0.78rem;
-          color: rgba(248,246,240,0.55);
+          color: var(--text-secondary);
           letter-spacing: 0.06em;
           flex: 1;
         }

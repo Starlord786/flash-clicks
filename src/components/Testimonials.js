@@ -31,18 +31,18 @@ const infiniteTestimonials = [...testimonials, ...testimonials];
 
 export default function Testimonials() {
   return (
-    <section className="bg-white overflow-hidden border-y border-[#f8f6f0]" style={{ paddingTop: '8rem', paddingBottom: '10rem' }}>
+    <section className="bg-[var(--bg-color)] overflow-hidden border-y border-[var(--border-color)]" style={{ paddingTop: '8rem', paddingBottom: '10rem' }}>
       <div className="container mx-auto px-6 text-center" style={{ marginBottom: '6rem' }}>
-        <span className="text-[#c9a063] font-sans tracking-[0.3em] uppercase text-sm block" style={{ marginBottom: '1rem' }}>Kind Words</span>
-        <h2 className="font-serif text-4xl md:text-5xl text-[#1a1a1a] font-light">
+        <span className="text-[var(--accent-color)] font-sans tracking-[0.3em] uppercase text-sm block" style={{ marginBottom: '1rem' }}>Kind Words</span>
+        <h2 className="font-serif text-4xl md:text-5xl text-[var(--text-primary)] font-light transition-colors">
           Client Stories
         </h2>
       </div>
 
       <div className="relative flex flex-col w-full max-w-[100vw] overflow-visible" style={{ paddingBottom: '3rem' }}>
         {/* Left/Right fading edge gradients for premium feel */}
-        <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+        <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-[var(--bg-color)] to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-[var(--bg-color)] to-transparent z-10 pointer-events-none" />
 
         <motion.div 
           className="flex gap-8 px-4"
@@ -57,13 +57,13 @@ export default function Testimonials() {
           {infiniteTestimonials.map((item, index) => (
             <div 
               key={index} 
-              className="min-w-[350px] md:min-w-[450px] bg-[#f8f6f0] p-10 md:p-14 rounded-sm shadow-sm flex flex-col justify-between hover:shadow-xl transition-shadow duration-500 cursor-pointer"
+              className="min-w-[350px] md:min-w-[450px] bg-[var(--surface-bg)] border border-[var(--border-color)] p-10 md:p-14 rounded-sm shadow-sm flex flex-col justify-between hover:shadow-xl transition-all duration-500 cursor-pointer"
             >
               <div className="mb-8">
-                <svg className="w-8 h-8 text-[#c9a063] mb-6 opacity-50" fill="currentColor" viewBox="0 0 32 32" aria-hidden="true">
+                <svg className="w-8 h-8 text-[var(--accent-color)] mb-6 opacity-50" fill="currentColor" viewBox="0 0 32 32" aria-hidden="true">
                   <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
                 </svg>
-                <p className="font-serif text-lg md:text-xl text-[#333] leading-relaxed italic">
+                <p className="font-serif text-lg md:text-xl text-[var(--text-primary)] leading-relaxed italic transition-colors">
                   "{item.text}"
                 </p>
               </div>
@@ -73,7 +73,7 @@ export default function Testimonials() {
                   <Image src={item.image} alt={item.name} fill sizes="56px" className="object-cover" />
                 </div>
                 <div>
-                  <h4 className="font-sans font-semibold text-[#1a1a1a] uppercase tracking-wider text-sm">{item.name}</h4>
+                  <h4 className="font-sans font-semibold text-[var(--text-primary)] uppercase tracking-wider text-sm transition-colors">{item.name}</h4>
                 </div>
               </div>
             </div>
