@@ -150,9 +150,16 @@ function GalleryGrid({ service }) {
         </div>
       </div>
 
-      <div className="svc-cards-grid">
+      <div className="svc-cards-grid" style={{ perspective: '1500px' }}>
         {service.gallery.map((item, idx) => (
-          <div key={idx} className={`svc-card ${item.span === 'wide' ? 'svc-card--wide' : ''}`}>
+          <motion.div 
+            key={idx} 
+            initial={{ opacity: 0, y: 120, rotateX: 25, scale: 0.9 }}
+            whileInView={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 1.4, delay: idx * 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className={`svc-card ${item.span === 'wide' ? 'svc-card--wide' : ''}`}
+          >
             <div className="svc-card-media">
               <Image src={item.src} alt={item.caption} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="svc-card-img" />
               <div className="svc-card-glass" />
@@ -163,7 +170,7 @@ function GalleryGrid({ service }) {
               <span className="svc-card-cap">{item.caption}</span>
               <span className="svc-card-arrow">↗</span>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>
@@ -253,7 +260,8 @@ export default function Services() {
           font-family: 'Cormorant Garamond', Georgia, serif;
           font-size: clamp(6rem, 14vw, 16rem);
           font-weight: 200;
-          color: var(--border-color);
+          color: #ffffff;
+          opacity: 0.08;
           line-height: 1;
           pointer-events: none;
           user-select: none;
@@ -278,6 +286,7 @@ export default function Services() {
           color: #c9a063;
           margin-bottom: 20px;
           font-weight: 500;
+          text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
         .svc-title-wrap {
@@ -289,19 +298,21 @@ export default function Services() {
           font-size: clamp(3.8rem, 10vw, 9.5rem);
           font-weight: 300;
           line-height: 0.9;
-          color: var(--text-primary);
+          color: #ffffff;
           margin: 0;
           letter-spacing: -0.02em;
+          text-shadow: 0 10px 30px rgba(0,0,0,0.4);
         }
 
         .svc-tagline {
           font-family: 'Inter', sans-serif;
           font-size: clamp(0.85rem, 1.4vw, 1rem);
-          color: var(--text-secondary);
+          color: rgba(255,255,255,0.7);
           letter-spacing: 0.12em;
           text-transform: uppercase;
           margin-bottom: 40px;
           font-weight: 300;
+          text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
         /* Progress bar indicators */

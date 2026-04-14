@@ -31,36 +31,36 @@ export default function Navbar() {
         animate={{ y: 0 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className={`fixed left-0 right-0 z-50 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] flex justify-center ${
-          scrolled ? 'top-6 px-4' : 'top-0 px-8 py-8 md:px-16'
+          scrolled ? 'top-4 md:top-6 px-4' : 'top-0 px-6 py-6 md:px-12 md:py-10'
         }`}
       >
         <div 
-          className={`flex justify-between items-center w-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          className={`flex justify-between items-center transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] gap-6 md:gap-10 ${
             scrolled 
-              ? 'max-w-4xl bg-[var(--surface-bg)]/90 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-[var(--border-color)] rounded-full px-8 py-4' 
-              : 'max-w-[1400px] bg-transparent text-[var(--text-primary)]'
+              ? 'w-full max-w-6xl bg-[var(--surface-bg)]/80 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] ring-1 ring-[var(--border-color)]/30 rounded-full px-6 py-3.5' 
+              : 'w-full max-w-[1400px] bg-transparent text-[var(--text-primary)]'
           }`}
         >
           {/* Logo */}
           <a 
             href="#top" 
-            className={`font-serif text-2xl md:text-3xl font-light tracking-wide hover:opacity-70 transition-opacity text-[var(--text-primary)]`}
+            className={`font-serif text-2xl md:text-3xl font-light tracking-wide hover:opacity-70 transition-opacity text-[var(--text-primary)] whitespace-nowrap`}
           >
-            Flash<span className={scrolled ? 'text-[var(--accent-color)]' : 'opacity-70'}>Clicks.</span>
+            Flash<span className={scrolled ? 'text-[var(--accent-color)] italic' : 'opacity-70 italic'}>Clicks.</span>
           </a>
 
           {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden lg:flex items-center justify-center gap-8 md:gap-10">
             {navLinks.slice(0, 4).map((link) => (
               <a
                 key={link.title}
                 href={link.href}
-                className={`text-sm tracking-[0.15em] uppercase font-medium relative group overflow-hidden transition-colors ${
-                  scrolled ? 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]' : 'text-[var(--text-primary)] opacity-80 hover:opacity-100'
+                className={`text-[10px] sm:text-xs tracking-[0.25em] uppercase font-semibold relative group overflow-hidden transition-colors ${
+                  scrolled ? 'text-[var(--text-primary)]/70 hover:text-[var(--text-primary)]' : 'text-[var(--text-primary)] opacity-80 hover:opacity-100'
                 }`}
               >
                 {link.title}
-                <span className={`absolute bottom-0 left-0 w-full h-[1px] transform origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100 ${
+                <span className={`absolute bottom-0 left-0 w-full h-[1px] transform origin-left scale-x-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100 ${
                   scrolled ? 'bg-[var(--accent-color)]' : 'bg-[var(--text-primary)]'
                 }`} />
               </a>
@@ -68,15 +68,15 @@ export default function Navbar() {
           </div>
 
           {/* Action / Menu area */}
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4 md:gap-6">
             <ThemeToggle />
             
             <a 
               href="#contact"
-              className={`hidden lg:flex px-6 py-2.5 rounded-full text-xs font-semibold tracking-widest uppercase transition-all duration-300 ${
+              className={`hidden md:flex px-6 py-2.5 rounded-full text-[10px] md:text-xs font-bold tracking-widest uppercase transition-all duration-500 ${
                 scrolled 
                   ? 'bg-[var(--text-primary)] text-[var(--bg-color)] hover:bg-[var(--accent-color)] hover:text-[var(--bg-color)]' 
-                  : 'bg-[var(--text-primary)]/10 backdrop-blur-sm text-[var(--text-primary)] hover:bg-[var(--text-primary)] hover:text-[var(--bg-color)] border border-[var(--text-primary)]/20'
+                  : 'bg-[var(--text-primary)]/10 backdrop-blur-md text-[var(--text-primary)] hover:bg-[var(--text-primary)] hover:text-[var(--bg-color)] border border-[var(--text-primary)]/20 hover:border-transparent'
               }`}
             >
               Book Studio
@@ -147,13 +147,13 @@ export default function Navbar() {
                     <a
                       href={item.href}
                       onClick={() => setMenuOpen(false)}
-                      className="group flex flex-col"
+                      className="group flex flex-col relative w-max"
                     >
-                      <div className="flex items-end gap-6">
-                        <span className="text-sm font-sans tracking-[0.2em] text-[#c9a063] mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="flex items-baseline gap-4 md:gap-8 overflow-hidden py-2">
+                        <span className="text-xs md:text-sm font-sans tracking-[0.25em] text-[var(--accent-color)] opacity-0 -translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
                           0{i + 1}
                         </span>
-                        <span className="font-serif text-5xl md:text-7xl font-light text-[var(--text-primary)] group-hover:italic group-hover:text-[var(--accent-color)] transition-all duration-500">
+                        <span className="font-serif text-5xl md:text-7xl lg:text-8xl font-light text-[var(--text-primary)] group-hover:italic group-hover:text-[var(--accent-color)] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
                           {item.title}
                         </span>
                       </div>

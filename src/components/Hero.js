@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
 
 const images = [
@@ -12,6 +12,19 @@ const images = [
 
 export default function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const containerRef = useRef(null);
+  
+  // 3D Parallax Scroll Setup
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  });
+
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
+  const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
+  const contentRotateX = useTransform(scrollYProgress, [0, 1], [0, 20]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -36,8 +49,9 @@ export default function Hero() {
   };
 
   return (
-    <section id="home" className="relative h-screen w-full overflow-hidden flex items-center justify-center bg-[var(--bg-color)]">
-      {/* Background Images with Slow Motion Ken Burns effect */}
+    <section ref={containerRef} id="home" className="relative h-screen w-full flex items-center justify-center bg-[var(--bg-color)]" style={{ perspective: '1200px' }}>
+      {/* Background Images with Slow Motion Ken Burns and 3D Parallax */}
+      <motion.div style={{ y: bgY, scale: bgScale }} className="absolute inset-0 w-full h-full">
       <AnimatePresence mode="popLayout">
         <motion.div
           key={currentIndex}
@@ -60,26 +74,30 @@ export default function Hero() {
           />
         </motion.div>
       </AnimatePresence>
+    </motion.div>
 
       {/* Dynamic Overlay with Cinematic Vignette Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg-color)] via-transparent to-[var(--bg-color)] opacity-90 z-10" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg-color)] via-transparent to-[var(--bg-color)] opacity-40 z-10 pointer-events-none" />
 
       {/* Hero Content */}
-      <div className="relative z-20 container mx-auto px-6 h-full flex flex-col justify-center items-center text-center">
+      <motion.div 
+        style={{ y: contentY, rotateX: contentRotateX, opacity: contentOpacity }}
+        className="relative z-20 w-full h-full flex flex-col justify-center items-center text-center transform-gpu"
+      >
         
         {/* Luxury Glassmorphism Container with Gold Glow */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95, y: 30 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 1.5, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="relative px-8 py-16 md:px-24 md:py-20 border border-[var(--border-color)] bg-[var(--glass-bg)] backdrop-blur-md shadow-[0_0_100px_rgba(201,160,99,0.15)] rounded-2xl flex flex-col items-center max-w-4xl overflow-hidden group"
+          className="relative px-8 py-16 md:px-24 md:py-20 border border-[var(--border-color)]/50 bg-[var(--surface-bg)]/30 backdrop-blur-sm shadow-[0_20px_80px_rgba(201,160,99,0.08)] rounded-2xl flex flex-col items-center max-w-4xl overflow-hidden group"
         >
           {/* Subtle animated light sweep on hover */}
           <motion.div 
             initial={{ x: "-100%" }}
             whileHover={{ x: "100%" }}
             transition={{ duration: 1.5, ease: "easeInOut" }}
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-[var(--text-primary)]/10 to-transparent skew-x-12 pointer-events-none" 
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-[var(--text-primary)]/5 to-transparent skew-x-12 pointer-events-none" 
           />
 
           {/* Letter by Letter Title Reveal */}
@@ -88,6 +106,7 @@ export default function Hero() {
             initial="hidden"
             animate="visible"
             className="font-serif text-5xl md:text-8xl lg:text-9xl text-[var(--text-primary)] font-light tracking-wide mb-8 flex overflow-hidden justify-center items-center"
+            style={{ textShadow: '0 4px 20px rgba(0,0,0,0.1)' }}
           >
             {titleText.split('').map((char, index) => (
               <motion.span 
@@ -138,8 +157,7 @@ export default function Hero() {
             </motion.a>
           </motion.div>
         </motion.div>
-      </div>
-
+      </motion.div>
       {/* Redesigned Minimal Luxury Vertical Scroll Indicator */}
       <motion.div 
         initial={{ opacity: 0 }}

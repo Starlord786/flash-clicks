@@ -39,7 +39,14 @@ export default function Testimonials() {
         </h2>
       </div>
 
-      <div className="relative flex flex-col w-full max-w-[100vw] overflow-visible" style={{ paddingBottom: '3rem' }}>
+      <motion.div 
+        initial={{ opacity: 0, y: 150, scale: 0.95 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+        className="relative flex flex-col w-full max-w-[100vw] overflow-visible" 
+        style={{ paddingBottom: '3rem', perspective: '1200px' }}
+      >
         {/* Left/Right fading edge gradients for premium feel */}
         <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-[var(--bg-color)] to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-[var(--bg-color)] to-transparent z-10 pointer-events-none" />
@@ -79,7 +86,7 @@ export default function Testimonials() {
             </div>
           ))}
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }

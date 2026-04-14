@@ -135,12 +135,22 @@ export default function Pricing() {
           {packages.map((pkg, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.9, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={{ y: -10 }}
+              initial={{ opacity: 0, y: 150, rotateX: 20, rotateZ: index === 1 ? 0 : (index === 0 ? -2 : 2), scale: 0.9 }}
+              whileInView={{ opacity: 1, y: 0, rotateX: 0, rotateZ: 0, scale: pkg.highlighted ? 1.04 : 1 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 1.4, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ 
+                y: -15, 
+                rotateX: 5, 
+                rotateY: 5, 
+                scale: pkg.highlighted ? 1.08 : 1.03,
+                boxShadow: pkg.highlighted 
+                  ? '0 20px 80px rgba(201,160,99,0.2), 0 40px 80px rgba(0,0,0,0.5)'
+                  : '0 20px 60px rgba(0,0,0,0.4)',
+                zIndex: 10 
+              }}
               style={{
+                perspective: '1000px',
                 position: 'relative',
                 display: 'flex',
                 flexDirection: 'column',
