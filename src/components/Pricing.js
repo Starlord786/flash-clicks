@@ -135,39 +135,33 @@ export default function Pricing() {
           {packages.map((pkg, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 150, rotateX: 20, rotateZ: index === 1 ? 0 : (index === 0 ? -2 : 2), scale: 0.9 }}
-              whileInView={{ opacity: 1, y: 0, rotateX: 0, rotateZ: 0, scale: pkg.highlighted ? 1.04 : 1 }}
+              initial={{ opacity: 0, y: 60, scale: 0.97 }}
+              whileInView={{ opacity: 1, y: 0, scale: pkg.highlighted ? 1.04 : 1 }}
               viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 1.4, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={{ 
-                y: -15, 
-                rotateX: 5, 
-                rotateY: 5, 
-                scale: pkg.highlighted ? 1.08 : 1.03,
-                boxShadow: pkg.highlighted 
-                  ? '0 20px 80px rgba(201,160,99,0.2), 0 40px 80px rgba(0,0,0,0.5)'
-                  : '0 20px 60px rgba(0,0,0,0.4)',
-                zIndex: 10 
+              transition={{ duration: 1.0, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{
+                y: -10,
+                scale: pkg.highlighted ? 1.07 : 1.02,
+                boxShadow: pkg.highlighted
+                  ? '0 20px 60px rgba(201,160,99,0.18), 0 30px 60px rgba(0,0,0,0.25)'
+                  : '0 20px 50px rgba(0,0,0,0.2)',
+                zIndex: 10,
               }}
               style={{
-                perspective: '1000px',
                 position: 'relative',
                 display: 'flex',
                 flexDirection: 'column',
                 padding: pkg.highlighted ? '48px 36px' : '40px 36px',
-                background: pkg.highlighted
-                  ? 'var(--bg-color)'
-                  : 'var(--surface-bg)',
-                border: pkg.highlighted
-                  ? '1px solid var(--accent-color)'
-                  : '1px solid var(--border-color)',
+                background: pkg.highlighted ? 'var(--bg-color)' : 'var(--surface-bg)',
+                border: pkg.highlighted ? '1px solid var(--accent-color)' : '1px solid var(--border-color)',
                 borderRadius: '4px',
                 boxShadow: pkg.highlighted
-                  ? '0 0 60px rgba(201,160,99,0.12), 0 30px 60px rgba(0,0,0,0.4)'
-                  : '0 10px 40px rgba(0,0,0,0.25)',
+                  ? '0 0 40px rgba(201,160,99,0.1), 0 20px 40px rgba(0,0,0,0.15)'
+                  : '0 4px 20px rgba(0,0,0,0.08)',
                 transform: pkg.highlighted ? 'scale(1.04)' : 'scale(1)',
                 zIndex: pkg.highlighted ? 2 : 1,
-                transition: 'box-shadow 0.4s ease',
+                willChange: 'transform',
+                transition: 'box-shadow 0.3s ease',
               }}
             >
               {/* Most Popular badge */}

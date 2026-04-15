@@ -14,17 +14,14 @@ export default function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const containerRef = useRef(null);
   
-  // 3D Parallax Scroll Setup
+  // Lightweight Parallax — only Y translation (GPU composited, no layout)
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"]
   });
 
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
-  const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
-  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
-  const contentRotateX = useTransform(scrollYProgress, [0, 1], [0, 20]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -49,9 +46,9 @@ export default function Hero() {
   };
 
   return (
-    <section ref={containerRef} id="home" className="relative h-screen w-full flex items-center justify-center bg-[var(--bg-color)]" style={{ perspective: '1200px' }}>
-      {/* Background Images with Slow Motion Ken Burns and 3D Parallax */}
-      <motion.div style={{ y: bgY, scale: bgScale }} className="absolute inset-0 w-full h-full">
+    <section ref={containerRef} id="home" className="relative h-screen w-full flex items-center justify-center bg-[var(--bg-color)]">
+      {/* Background Images with GPU-composited Y parallax */}
+      <motion.div style={{ y: bgY, willChange: 'transform' }} className="absolute inset-0 w-full h-full" aria-hidden>
       <AnimatePresence mode="popLayout">
         <motion.div
           key={currentIndex}
@@ -80,9 +77,9 @@ export default function Hero() {
       <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg-color)] via-transparent to-[var(--bg-color)] opacity-40 z-10 pointer-events-none" />
 
       {/* Hero Content */}
-      <motion.div 
-        style={{ y: contentY, rotateX: contentRotateX, opacity: contentOpacity }}
-        className="relative z-20 w-full h-full flex flex-col justify-center items-center text-center transform-gpu"
+      <motion.div
+        style={{ opacity: contentOpacity }}
+        className="relative z-20 w-full h-full flex flex-col justify-center items-center text-center"
       >
         
         {/* Luxury Glassmorphism Container with Gold Glow */}
