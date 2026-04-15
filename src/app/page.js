@@ -24,6 +24,16 @@ export default function Home() {
     >
       <Cursor />
       <Navbar />
+
+      {/* Logo — absolute (not fixed), scrolls away with page */}
+      <div style={{ position: 'absolute', top: '-2.5rem', left: '-4rem', zIndex: 49 }}>
+        <img
+          src="/images/Logo.png"
+          alt="Flash Clicks Logo"
+          style={{ height: '200px', width: 'auto', objectFit: 'contain' }}
+        />
+      </div>
+
       <div id="top"><Hero /></div>
       <div id="services"><Services /></div>
       <div id="testimonials"><Testimonials /></div>
