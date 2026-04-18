@@ -16,57 +16,103 @@ const servicesData = [
       "Capturing the pure emotion, fleeting glances, and eternal promises of your special day. We document your love story with a cinematic, timeless approach.",
     accent: "#c9a063",
     heroImages: [
-      "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=2070&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=2069&auto=format&fit=crop",
+      "/OPTIMIZED_PHOTOS/indian temple wedding/5U1A3473.webp",
     ],
     gallery: [
-      { src: "https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=2070&auto=format&fit=crop", caption: "Ceremony Moments", span: "wide" },
-      { src: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=2069&auto=format&fit=crop", caption: "Golden Hour" },
-      { src: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1887&auto=format&fit=crop", caption: "Candid Emotions" },
-      { src: "https://images.unsplash.com/photo-1591604466107-ec97de577aff?q=80&w=2071&auto=format&fit=crop", caption: "Reception" },
+      { src: "/OPTIMIZED_PHOTOS/indian temple wedding/5U1A3467.webp", caption: "Sacred Moments", span: "wide" },
+      { src: "/OPTIMIZED_PHOTOS/indian temple wedding/5U1A3473.webp", caption: "Wedding Rituals" },
+      { src: "/OPTIMIZED_PHOTOS/indian temple wedding/5U1A3503.webp", caption: "The Vows" },
+      { src: "/OPTIMIZED_PHOTOS/indian temple wedding/5U1A3535.webp", caption: "Eternal Bond" },
     ],
   },
   {
-    id: "portrait",
+    id: "post-wedding",
     number: "02",
-    label: "Portrait",
-    title: ["Portrait", "Studio"],
-    tagline: "Your Essence, Beautifully Captured",
+    label: "Post Wedding",
+    title: ["Post", "Wedding"],
+    tagline: "Love Beyond the Ceremony",
     description:
-      "Elegant, striking, and intimate portraits that reveal the soul behind the face. Expert lighting and composition bring your true personality to life.",
+      "Capturing the intimate, relaxed, and joyful moments after your big day. We focus on the natural chemistry and beautiful landscapes that define your new journey together.",
     accent: "#b08d57",
     heroImages: [
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1887&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop",
+      "/OPTIMIZED_PHOTOS/post wedding/PW - Hori/5U1A9453.webp",
     ],
     gallery: [
-      { src: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1887&auto=format&fit=crop", caption: "Studio Light", span: "wide" },
-      { src: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop", caption: "Natural Light" },
-      { src: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=2070&auto=format&fit=crop", caption: "Dramatic Moody" },
-      { src: "https://images.unsplash.com/photo-1598550874175-4d0ef436c909?q=80&w=1887&auto=format&fit=crop", caption: "Elegance" },
+      { src: "/OPTIMIZED_PHOTOS/post wedding/AKST4731.webp", caption: "Eternal Embrace", span: "wide" },
+      { src: "/OPTIMIZED_PHOTOS/post wedding/AKST4695.webp", caption: "Soft Light Portraits" },
+      { src: "/OPTIMIZED_PHOTOS/post wedding/AKST4803.webp", caption: "Natural Backdrop" },
+      { src: "/OPTIMIZED_PHOTOS/post wedding/AKST4895.webp", caption: "Scenic Love" },
+      { src: "/OPTIMIZED_PHOTOS/post wedding/2/5U1A9434.webp", caption: "Garden Romance", span: "wide" },
+      { src: "/OPTIMIZED_PHOTOS/post wedding/2/5U1A9464.webp", caption: "Quiet Moments" },
+      { src: "/OPTIMIZED_PHOTOS/post wedding/2/5U1A9520.webp", caption: "Walking Together" },
+      { src: "/OPTIMIZED_PHOTOS/post wedding/2/5U1A9553.webp", caption: "The Glance" },
+      { src: "/OPTIMIZED_PHOTOS/post wedding/2/5U1A9595.webp", caption: "Golden Hour Glow", span: "wide" },
+      { src: "/OPTIMIZED_PHOTOS/post wedding/2/5U1A9622.webp", caption: "Hand in Hand" },
+      { src: "/OPTIMIZED_PHOTOS/post wedding/2/5U1A9636.webp", caption: "Soulful Eyes" },
+      { src: "/OPTIMIZED_PHOTOS/post wedding/2/5U1A9658.webp", caption: "Evening Serenity" },
     ],
   },
   {
-    id: "fashion",
+    id: "baby-shower",
     number: "03",
-    label: "Fashion",
-    title: ["Fashion &", "Editorial"],
-    tagline: "Defining Modern Aesthetics",
+    label: "Baby Shower",
+    title: ["Baby", "Shower"],
+    tagline: "Celebrating New Beginnings",
     description:
-      "High-end fashion and editorial photography for brands and models. Visually striking images that command attention and define modern aesthetics.",
+      "Capturing the warmth, anticipation, and pure joy of welcoming a new life. We document the precious details and the glowing love of the journey towards parenthood.",
     accent: "#c9a063",
     heroImages: [
-      "https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=2070&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=2070&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1920&auto=format&fit=crop",
+      "/OPTIMIZED_PHOTOS/baby shower/2/BS - Hori/02.webp",
     ],
     gallery: [
-      { src: "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=2070&auto=format&fit=crop", caption: "Runway Ready", span: "wide" },
-      { src: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1920&auto=format&fit=crop", caption: "Editorial Spread" },
-      { src: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?q=80&w=1974&auto=format&fit=crop", caption: "Brand Campaign" },
-      { src: "https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=1976&auto=format&fit=crop", caption: "Lookbook" },
+      { src: "/OPTIMIZED_PHOTOS/baby shower/2/01.webp", caption: "Sweet Anticipation", span: "wide" },
+      { src: "/OPTIMIZED_PHOTOS/baby shower/5U1A9751.webp", caption: "Joyful Celebration" },
+      { src: "/OPTIMIZED_PHOTOS/baby shower/2/5U1A2470.webp", caption: "Tender Moments" },
+      { src: "/OPTIMIZED_PHOTOS/baby shower/2/5U1A2488.webp", caption: "The Glow" },
+      { src: "/OPTIMIZED_PHOTOS/baby shower/2/5U1A2500.webp", caption: "Family Love", span: "wide" },
+      { src: "/OPTIMIZED_PHOTOS/baby shower/5U1A9787.webp", caption: "Celebration Details" },
+      { src: "/OPTIMIZED_PHOTOS/baby shower/2/5U1A2515.webp", caption: "Parental Bond" },
+      { src: "/OPTIMIZED_PHOTOS/baby shower/2/5U1A2527.webp", caption: "Pure Bliss" },
+    ],
+  },
+  {
+    id: "baby-shower-outdoor",
+    number: "04",
+    label: "Baby Shower Outdoor",
+    title: ["Baby Shower", "Outdoor"],
+    tagline: "Nature's Perfect Backdrop",
+    description:
+      "Bringing the beauty of the outdoors to your celebration. We capture your special moments under the natural light and stunning landscapes for a truly fresh and vibrant feel.",
+    accent: "#b08d57",
+    heroImages: [
+      "/OPTIMIZED_PHOTOS/baby shower oudoor/BS - Hori/5U1A6153.webp",
+    ],
+    gallery: [
+      { src: "/OPTIMIZED_PHOTOS/baby shower oudoor/5U1A6141.webp", caption: "Natural Radiance", span: "wide" },
+      { src: "/OPTIMIZED_PHOTOS/baby shower oudoor/5U1A6147.webp", caption: "Outdoor Bliss" },
+      { src: "/OPTIMIZED_PHOTOS/baby shower oudoor/5U1A6280.webp", caption: "Garden Celebration" },
+      { src: "/OPTIMIZED_PHOTOS/baby shower oudoor/5U1A6311.webp", caption: "Lush Backdrop" },
+      { src: "/OPTIMIZED_PHOTOS/baby shower oudoor/5U1A6337.webp", caption: "Sweet Moments Out" },
+      { src: "/OPTIMIZED_PHOTOS/baby shower oudoor/5U1A6367.webp", caption: "Vibrant Parenthood" },
+    ],
+  },
+  {
+    id: "classical-dance",
+    number: "05",
+    label: "Classical Dance",
+    title: ["Classical", "Dance"],
+    tagline: "Poetry in Motion",
+    description:
+      "Capturing the grace, rhythm, and timeless beauty of classical dance. We freeze the most expressive moments of the performance, celebrating the heritage and dedication of the artist.",
+    accent: "#c9a063",
+    heroImages: [
+      "/OPTIMIZED_PHOTOS/clasical dance/5U1A5190.webp",
+    ],
+    gallery: [
+      { src: "/OPTIMIZED_PHOTOS/clasical dance/5U1A5104.webp", caption: "Graceful Posture", span: "wide" },
+      { src: "/OPTIMIZED_PHOTOS/clasical dance/5U1A5150.webp", caption: "The Performance" },
+      { src: "/OPTIMIZED_PHOTOS/clasical dance/5U1A5169.webp", caption: "Cultural Expression" },
+      { src: "/OPTIMIZED_PHOTOS/clasical dance/5U1A5176.webp", caption: "Emotional Depth" },
     ],
   },
 ];
@@ -231,12 +277,12 @@ export default function Services() {
           object-fit: cover;
         }
         @keyframes slideEnter {
-          from { transform: scale(1.0); opacity: 1; }
-          to   { transform: scale(1.12); opacity: 1; }
+          from { opacity: 1; }
+          to   { opacity: 1; }
         }
         @keyframes slideLeave {
-          from { opacity: 1; transform: scale(1.12); }
-          to   { opacity: 0; transform: scale(1.18); }
+          from { opacity: 1; }
+          to   { opacity: 0; }
         }
 
         /* Vignette overlay */

@@ -5,9 +5,9 @@ import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import Image from 'next/image';
 
 const images = [
-  "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=2069&auto=format&fit=crop", // Wedding
-  "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=2040&auto=format&fit=crop", // Fashion
-  "https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?q=80&w=1964&auto=format&fit=crop", // Portrait
+  "/OPTIMIZED_PHOTOS/0.webp",
+  "/OPTIMIZED_PHOTOS/model shoot/5U1A0832.webp",
+  "/OPTIMIZED_PHOTOS/indian temple wedding/5U1A3503.webp",
 ];
 
 export default function Hero() {

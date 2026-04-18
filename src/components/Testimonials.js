@@ -9,28 +9,28 @@ const testimonials = [
     role: "Wedding Clients",
     rating: 5,
     text: "FlashClicks captured the magic of our wedding day in ways we couldn't have imagined. Every photo is a masterpiece that tells our story beautifully.",
-    image: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=1780&auto=format&fit=crop",
+    image: "/OPTIMIZED_PHOTOS/indian temple wedding/5U1A3467.webp",
   },
   {
     name: "Sophia Carter",
     role: "Portrait Session",
     rating: 5,
     text: "The portrait session was incredibly comfortable. They know exactly how to use light to bring out your best features. Absolutely stunning work.",
-    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1976&auto=format&fit=crop",
+    image: "/OPTIMIZED_PHOTOS/model shoot/5U1A0289.webp",
   },
   {
     name: "Vogue Magazine",
     role: "Editorial Feature",
     rating: 5,
     text: "A truly visionary approach to editorial photography. The aesthetic is clean, luxurious, and commands attention on every spread.",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop",
+    image: "/OPTIMIZED_PHOTOS/model shoot/5U1A2339.webp",
   },
   {
     name: "Michael Chen",
     role: "Corporate Event",
     rating: 5,
     text: "Professionalism at its finest. They framed our entire event with such an artistic eye, we felt like we were watching a movie of our own lives.",
-    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1887&auto=format&fit=crop",
+    image: "/OPTIMIZED_PHOTOS/post wedding/AKST4726.webp",
   },
 ];
 
