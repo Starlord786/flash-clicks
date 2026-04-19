@@ -115,6 +115,48 @@ const servicesData = [
       { src: "/OPTIMIZED_PHOTOS/clasical dance/5U1A5176.webp", caption: "Emotional Depth" },
     ],
   },
+  {
+    id: "model-shoot",
+    number: "06",
+    label: "Model Shoot",
+    title: ["Model", "Shoot"],
+    tagline: "High-Fashion & Editorial Portraits",
+    description:
+      "Capturing bold, striking, and dynamic portraits for fashion, portfolios, and editorial campaigns. We work closely with our subjects to ensure flawless lighting, perfect posing, and an undeniable aura.",
+    accent: "#b08d57",
+    heroImages: [
+      "/OPTIMIZED_PHOTOS/model shoot/5U1A6822.webp",
+    ],
+    gallery: [
+      { src: "/OPTIMIZED_PHOTOS/model shoot/5U1A0289.webp", caption: "Editorial Stance", span: "wide" },
+      { src: "/OPTIMIZED_PHOTOS/model shoot/5U1A0494.webp", caption: "High Contrast" },
+      { src: "/OPTIMIZED_PHOTOS/model shoot/5U1A0720.webp", caption: "Vivid Colors" },
+      { src: "/OPTIMIZED_PHOTOS/model shoot/5U1A0832.webp", caption: "The Look" },
+      { src: "/OPTIMIZED_PHOTOS/model shoot/5U1A2334.webp", caption: "Dynamic Movement", span: "wide" },
+      { src: "/OPTIMIZED_PHOTOS/model shoot/5U1A2335.webp", caption: "Soft Light" },
+      { src: "/OPTIMIZED_PHOTOS/model shoot/5U1A2339.webp", caption: "Fierce Elegance" },
+      { src: "/OPTIMIZED_PHOTOS/model shoot/5U1A2347.webp", caption: "Pure Aesthetics" },
+    ],
+  },
+  {
+    id: "puberty-ceremony",
+    number: "07",
+    label: "Puberty Ceremony",
+    title: ["Puberty", "Ceremony"],
+    tagline: "A Milestone of Grace",
+    description:
+      "Documenting the beautiful cultural traditions, vibrant colors, and joyous family celebrations of coming-of-age ceremonies. We capture the elegance and significant rituals of this special milestone.",
+    accent: "#c9a063",
+    heroImages: [
+      "/OPTIMIZED_PHOTOS/puberty/100A0372.webp",
+    ],
+    gallery: [
+      { src: "/OPTIMIZED_PHOTOS/puberty/100A0375.webp", caption: "Cultural Elegance", span: "wide" },
+      { src: "/OPTIMIZED_PHOTOS/puberty/100A0373.webp", caption: "Joyous Moments" },
+      { src: "/OPTIMIZED_PHOTOS/puberty/100A9242.webp", caption: "Traditional Attire" },
+      { src: "/OPTIMIZED_PHOTOS/puberty/100A9249.webp", caption: "Family Blessings" },
+    ],
+  },
 ];
 
 /* ─── Hero Slideshow ──────────────────────────────────────────────────────── */

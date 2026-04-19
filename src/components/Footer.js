@@ -1,8 +1,29 @@
 "use client";
 
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from 'react';
 
 export default function Footer() {
+  const [showTopBtn, setShowTopBtn] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 500) {
+        setShowTopBtn(true);
+      } else {
+        setShowTopBtn(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  };
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -308,6 +329,35 @@ export default function Footer() {
             gap: 32px;
             justify-content: center;
           }
+          .ft-top-btn {
+            bottom: 20px;
+            right: 20px;
+          }
+        }
+
+        .ft-top-btn {
+          position: fixed;
+          bottom: 40px;
+          right: 40px;
+          width: 50px;
+          height: 50px;
+          background: rgba(18, 18, 18, 0.8);
+          backdrop-filter: blur(8px);
+          border: 1px solid var(--border-color);
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: var(--text-primary);
+          cursor: pointer;
+          z-index: 99;
+          transition: border-color 0.4s ease, color 0.4s ease, transform 0.4s ease;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .ft-top-btn:hover {
+          border-color: #c9a063;
+          color: #c9a063;
+          transform: translateY(-5px);
         }
       `}</style>
       
@@ -414,6 +464,24 @@ export default function Footer() {
           </div>
         </motion.div>
       </div>
+
+      <AnimatePresence>
+        {showTopBtn && (
+          <motion.button 
+            initial={{ opacity: 0, y: 20, scale: 0.8 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.8 }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            onClick={scrollToTop} 
+            className="ft-top-btn"
+            aria-label="Scroll to top"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 20V4M12 4L5 11M12 4L19 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </motion.button>
+        )}
+      </AnimatePresence>
     </footer>
   );
 }
