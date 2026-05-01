@@ -1,17 +1,9 @@
 "use client";
 
-import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import Image from 'next/image';
-
-const images = [
-  "/OPTIMIZED_PHOTOS/0.webp",
-  "/OPTIMIZED_PHOTOS/model shoot/5U1A0832.webp",
-  "/OPTIMIZED_PHOTOS/indian temple wedding/5U1A3503.webp",
-];
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 export default function Hero() {
-  const [currentIndex, setCurrentIndex] = useState(0);
   const containerRef = useRef(null);
   
   // Lightweight Parallax — only Y translation (GPU composited, no layout)
@@ -22,13 +14,6 @@ export default function Hero() {
 
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 6000);
-    return () => clearInterval(timer);
-  }, []);
 
   // Cinematic Letter by letter reveal strategy
   const titleText = "FlashClicks.";
@@ -46,32 +31,28 @@ export default function Hero() {
   };
 
   return (
-    <section ref={containerRef} id="home" className="relative h-screen w-full flex items-center justify-center bg-[var(--bg-color)]">
-      {/* Background Images with GPU-composited Y parallax */}
+    <section 
+      ref={containerRef} 
+      id="home" 
+      className="relative h-screen w-full flex items-center justify-center bg-[#0a0a0a]"
+      style={{
+        '--bg-color': '#0a0a0a',
+        '--text-primary': '#f8f6f0',
+        '--text-secondary': 'rgba(255, 255, 255, 0.5)',
+        '--border-color': 'rgba(255, 255, 255, 0.05)'
+      }}
+    >
+      {/* Background Video with GPU-composited Y parallax */}
       <motion.div style={{ y: bgY, willChange: 'transform' }} className="absolute inset-0 w-full h-full" aria-hidden>
-      <AnimatePresence mode="popLayout">
-        <motion.div
-          key={currentIndex}
-          initial={{ opacity: 0, scale: 1.15 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 1.05 }}
-          transition={{ 
-            opacity: { duration: 2, ease: "easeInOut" },
-            scale: { duration: 10, ease: "linear" }
-          }}
-          className="absolute inset-0"
-        >
-          <Image
-            src={images[currentIndex]}
-            alt="Hero background"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover"
-          />
-        </motion.div>
-      </AnimatePresence>
-    </motion.div>
+        <video
+          src="/video/post-optimized.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full h-full object-cover object-center absolute inset-0"
+        />
+      </motion.div>
 
       {/* Dynamic Overlay with Cinematic Vignette Gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg-color)] via-transparent to-[var(--bg-color)] opacity-40 z-10 pointer-events-none" />
@@ -82,28 +63,21 @@ export default function Hero() {
         className="relative z-20 w-full h-full flex flex-col justify-center items-center text-center"
       >
         
-        {/* Luxury Glassmorphism Container with Gold Glow */}
+        {/* Clean Container Without Glassmorphism Box */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95, y: 30 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 1.5, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="relative px-8 py-16 md:px-24 md:py-20 border border-[var(--border-color)]/50 bg-[var(--surface-bg)]/30 backdrop-blur-sm shadow-[0_20px_80px_rgba(201,160,99,0.08)] rounded-2xl flex flex-col items-center max-w-4xl overflow-hidden group"
+          className="relative px-8 py-16 md:px-24 md:py-20 flex flex-col items-center max-w-4xl w-full"
         >
-          {/* Subtle animated light sweep on hover */}
-          <motion.div 
-            initial={{ x: "-100%" }}
-            whileHover={{ x: "100%" }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-[var(--text-primary)]/5 to-transparent skew-x-12 pointer-events-none" 
-          />
 
           {/* Letter by Letter Title Reveal */}
           <motion.h1 
             variants={titleVariants}
             initial="hidden"
             animate="visible"
-            className="font-serif text-5xl md:text-8xl lg:text-9xl text-[var(--text-primary)] font-light tracking-wide mb-8 flex overflow-hidden justify-center items-center"
-            style={{ textShadow: '0 4px 20px rgba(0,0,0,0.1)' }}
+            className="font-serif text-5xl md:text-8xl lg:text-9xl text-[var(--text-primary)] font-light tracking-wide mb-8 flex overflow-hidden justify-center items-center drop-shadow-2xl"
+            style={{ textShadow: '0 4px 30px rgba(0,0,0,0.15)' }}
           >
             {titleText.split('').map((char, index) => (
               <motion.span 

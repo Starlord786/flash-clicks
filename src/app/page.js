@@ -7,6 +7,7 @@ import StarParticles from '@/components/StarParticles';
 import Preloader from '@/components/Preloader';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
+import About from '@/components/About';
 import Services from '@/components/Services';
 import Testimonials from '@/components/Testimonials';
 import Pricing from '@/components/Pricing';
@@ -47,6 +48,7 @@ export default function Home() {
       </div>
 
       <div id="top"><Hero /></div>
+      <div id="about"><About /></div>
       <div id="services"><Services /></div>
       <div id="testimonials"><Testimonials /></div>
           <div id="pricing"><Pricing /></div>

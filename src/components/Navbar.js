@@ -6,6 +6,7 @@ import ThemeToggle from './ThemeToggle';
 
 const navLinks = [
   { title: 'Home', href: '#top' },
+  { title: 'About', href: '#about' },
   { title: 'Expertise', href: '#services' },
   { title: 'Client Stories', href: '#testimonials' },
   { title: 'Investment', href: '#pricing' },
@@ -44,7 +45,7 @@ export default function Navbar() {
           style={scrolled ? { paddingLeft: '3rem', paddingRight: '3rem', paddingTop: '0.5rem', paddingBottom: '0.5rem' } : {}}
           className={`flex items-center transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] gap-6 md:gap-10 ${scrolled
               ? 'w-auto bg-[var(--surface-bg)]/80 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] ring-1 ring-[var(--border-color)]/30 rounded-full'
-              : 'w-full max-w-[1400px] justify-center bg-transparent text-[var(--text-primary)]'
+              : 'w-full max-w-[1400px] justify-center bg-transparent text-white'
             }`}
         >
           {/* Desktop Nav Links - Now Centered */}
@@ -53,11 +54,11 @@ export default function Navbar() {
               <a
                 key={link.title}
                 href={link.href}
-                className={`text-[10px] sm:text-xs tracking-[0.25em] uppercase font-semibold relative group overflow-hidden transition-colors ${scrolled ? 'text-[var(--text-primary)]/70 hover:text-[var(--text-primary)]' : 'text-[var(--text-primary)] opacity-80 hover:opacity-100'
+                className={`text-[10px] sm:text-xs tracking-[0.25em] uppercase font-semibold relative group overflow-hidden transition-colors ${scrolled ? 'text-[var(--text-primary)]/70 hover:text-[var(--text-primary)]' : 'text-white opacity-80 hover:opacity-100'
                   }`}
               >
                 {link.title}
-                <span className={`absolute bottom-0 left-0 w-full h-[1px] transform origin-left scale-x-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100 ${scrolled ? 'bg-[var(--accent-color)]' : 'bg-[var(--text-primary)]'
+                <span className={`absolute bottom-0 left-0 w-full h-[1px] transform origin-left scale-x-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100 ${scrolled ? 'bg-[var(--accent-color)]' : 'bg-white'
                   }`} />
               </a>
             ))}
@@ -71,7 +72,7 @@ export default function Navbar() {
               href="#contact"
               className={`hidden md:flex px-6 py-2.5 rounded-full text-[10px] md:text-xs font-bold tracking-widest uppercase transition-all duration-500 ${scrolled
                   ? 'bg-[var(--text-primary)] text-[var(--bg-color)] hover:bg-[var(--accent-color)] hover:text-[var(--bg-color)]'
-                  : 'bg-[var(--text-primary)]/10 backdrop-blur-md text-[var(--text-primary)] hover:bg-[var(--text-primary)] hover:text-[var(--bg-color)] border border-[var(--text-primary)]/20 hover:border-transparent'
+                  : 'bg-white/10 backdrop-blur-md text-white hover:bg-white hover:text-black border border-white/20 hover:border-transparent'
                 }`}
             >
               Book Studio
@@ -80,21 +81,21 @@ export default function Navbar() {
             {/* Minimal Hamburger */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className={`flex flex-col justify-center items-center gap-[6px] w-10 h-10 rounded-full transition-colors ${scrolled ? 'bg-[var(--text-primary)]/5 hover:bg-[var(--text-primary)]/10' : 'bg-[var(--text-primary)]/20 hover:bg-[var(--text-primary)]/40 backdrop-blur-sm'
+              className={`flex flex-col justify-center items-center gap-[6px] w-10 h-10 rounded-full transition-colors ${scrolled ? 'bg-[var(--text-primary)]/5 hover:bg-[var(--text-primary)]/10' : 'bg-white/20 hover:bg-white/40 backdrop-blur-sm'
                 }`}
               aria-label="Menu"
             >
               <motion.span
                 animate={menuOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
-                className={`block w-5 h-[1.5px] bg-[var(--text-primary)] transition-colors ease-out`}
+                className={`block w-5 h-[1.5px] transition-colors ease-out ${scrolled || menuOpen ? 'bg-[var(--text-primary)]' : 'bg-white'}`}
               />
               <motion.span
                 animate={menuOpen ? { opacity: 0 } : { opacity: 1 }}
-                className={`block w-5 h-[1.5px] bg-[var(--text-primary)] transition-colors ease-out`}
+                className={`block w-5 h-[1.5px] transition-colors ease-out ${scrolled || menuOpen ? 'bg-[var(--text-primary)]' : 'bg-white'}`}
               />
               <motion.span
                 animate={menuOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
-                className={`block w-5 h-[1.5px] bg-[var(--text-primary)] transition-colors ease-out`}
+                className={`block w-5 h-[1.5px] transition-colors ease-out ${scrolled || menuOpen ? 'bg-[var(--text-primary)]' : 'bg-white'}`}
               />
             </button>
           </div>

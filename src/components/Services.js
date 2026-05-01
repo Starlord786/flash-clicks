@@ -18,6 +18,7 @@ const servicesData = [
     heroImages: [
       "/OPTIMIZED_PHOTOS/indian temple wedding/5U1A3473.webp",
     ],
+    heroPosition: "center 25%",
     gallery: [
       { src: "/OPTIMIZED_PHOTOS/indian temple wedding/5U1A3467.webp", caption: "Sacred Moments", span: "wide" },
       { src: "/OPTIMIZED_PHOTOS/indian temple wedding/5U1A3473.webp", caption: "Wedding Rituals" },
@@ -37,6 +38,7 @@ const servicesData = [
     heroImages: [
       "/OPTIMIZED_PHOTOS/post wedding/PW - Hori/5U1A9453.webp",
     ],
+    heroPosition: "center",
     gallery: [
       { src: "/OPTIMIZED_PHOTOS/post wedding/AKST4731.webp", caption: "Eternal Embrace", span: "wide" },
       { src: "/OPTIMIZED_PHOTOS/post wedding/AKST4695.webp", caption: "Soft Light Portraits" },
@@ -64,6 +66,7 @@ const servicesData = [
     heroImages: [
       "/OPTIMIZED_PHOTOS/baby shower/2/BS - Hori/02.webp",
     ],
+    heroPosition: "center",
     gallery: [
       { src: "/OPTIMIZED_PHOTOS/baby shower/2/01.webp", caption: "Sweet Anticipation", span: "wide" },
       { src: "/OPTIMIZED_PHOTOS/baby shower/5U1A9751.webp", caption: "Joyful Celebration" },
@@ -87,6 +90,7 @@ const servicesData = [
     heroImages: [
       "/OPTIMIZED_PHOTOS/baby shower oudoor/BS - Hori/5U1A6153.webp",
     ],
+    heroPosition: "center",
     gallery: [
       { src: "/OPTIMIZED_PHOTOS/baby shower oudoor/5U1A6141.webp", caption: "Natural Radiance", span: "wide" },
       { src: "/OPTIMIZED_PHOTOS/baby shower oudoor/5U1A6147.webp", caption: "Outdoor Bliss" },
@@ -108,6 +112,7 @@ const servicesData = [
     heroImages: [
       "/OPTIMIZED_PHOTOS/clasical dance/5U1A5190.webp",
     ],
+    heroPosition: "center 25%",
     gallery: [
       { src: "/OPTIMIZED_PHOTOS/clasical dance/5U1A5104.webp", caption: "Graceful Posture", span: "wide" },
       { src: "/OPTIMIZED_PHOTOS/clasical dance/5U1A5150.webp", caption: "The Performance" },
@@ -127,6 +132,7 @@ const servicesData = [
     heroImages: [
       "/OPTIMIZED_PHOTOS/model shoot/5U1A6822.webp",
     ],
+    heroPosition: "center 25%",
     gallery: [
       { src: "/OPTIMIZED_PHOTOS/model shoot/5U1A0289.webp", caption: "Editorial Stance", span: "wide" },
       { src: "/OPTIMIZED_PHOTOS/model shoot/5U1A0494.webp", caption: "High Contrast" },
@@ -150,6 +156,7 @@ const servicesData = [
     heroImages: [
       "/OPTIMIZED_PHOTOS/puberty/100A0372.webp",
     ],
+    heroPosition: "center 25%",
     gallery: [
       { src: "/OPTIMIZED_PHOTOS/puberty/100A0375.webp", caption: "Cultural Elegance", span: "wide" },
       { src: "/OPTIMIZED_PHOTOS/puberty/100A0373.webp", caption: "Joyous Moments" },
@@ -187,7 +194,15 @@ function HeroSlideshow({ images, service }) {
 
         return (
           <div key={idx} className={sc}>
-            <Image src={img} alt={`${service.label} ${idx}`} fill sizes="100vw" className="svc-slide-img" priority={idx === 0} />
+            <Image 
+              src={img} 
+              alt={`${service.label} ${idx}`} 
+              fill 
+              sizes="100vw" 
+              className="svc-slide-img" 
+              priority={idx === 0} 
+              style={{ objectPosition: service.heroPosition || 'center' }}
+            />
           </div>
         );
       })}
@@ -249,7 +264,7 @@ function GalleryGrid({ service }) {
             className={`svc-card ${item.span === 'wide' ? 'svc-card--wide' : ''}`}
           >
             <div className="svc-card-media">
-              <Image src={item.src} alt={item.caption} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="svc-card-img" />
+              <img src={item.src} alt={item.caption} className="svc-card-img" loading="lazy" />
               <div className="svc-card-glass" />
               <div className="svc-card-shine" />
             </div>
@@ -317,6 +332,7 @@ export default function Services() {
         }
         .svc-slide-img {
           object-fit: cover;
+          object-position: center;
         }
         @keyframes slideEnter {
           from { opacity: 1; }
@@ -522,12 +538,11 @@ export default function Services() {
           margin: 0;
         }
 
-        /* Cards grid */
         .svc-cards-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          grid-template-rows: auto;
-          gap: 12px;
+          align-items: start;
+          gap: 16px;
         }
 
         @media (max-width: 900px) {
@@ -547,15 +562,17 @@ export default function Services() {
           cursor: pointer;
           background: var(--surface-bg);
           border: 1px solid var(--border-color);
-          border-radius: 3px;
-          overflow: hidden;
+          padding: 10px;
+          border-radius: 4px;
           display: flex;
           flex-direction: column;
-          transition: border-color 0.4s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1);
+          gap: 10px;
+          transition: border-color 0.4s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease;
         }
         .svc-card:hover {
-          border-color: rgba(201,160,99,0.28);
+          border-color: rgba(201,160,99,0.5);
           transform: translateY(-6px);
+          box-shadow: 0 12px 40px rgba(0,0,0,0.15);
         }
         .svc-card--wide {
           grid-column: span 2;
@@ -567,18 +584,14 @@ export default function Services() {
         .svc-card-media {
           position: relative;
           width: 100%;
-          aspect-ratio: 4/3;
+          border-radius: 2px;
           overflow: hidden;
-        }
-        .svc-card--wide .svc-card-media {
-          aspect-ratio: 21/9;
-        }
-        @media (max-width: 700px) {
-          .svc-card--wide .svc-card-media { aspect-ratio: 4/3; }
         }
 
         .svc-card-img {
-          object-fit: cover;
+          width: 100%;
+          height: auto;
+          display: block;
           transition: transform 0.9s cubic-bezier(0.25,0.46,0.45,0.94);
         }
         .svc-card:hover .svc-card-img {
@@ -616,9 +629,8 @@ export default function Services() {
           display: flex;
           align-items: center;
           gap: 12px;
-          padding: 14px 18px;
-          background: var(--surface-bg);
-          border-top: 1px solid var(--border-color);
+          padding: 6px 4px;
+          background: transparent;
         }
         .svc-card-num {
           font-family: 'Cormorant Garamond', Georgia, serif;
