@@ -1,7 +1,10 @@
 "use client";
 
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Cursor from '@/components/Cursor';
+import StarParticles from '@/components/StarParticles';
+import Preloader from '@/components/Preloader';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Services from '@/components/Services';
@@ -10,19 +13,28 @@ import Pricing from '@/components/Pricing';
 import Footer from '@/components/Footer';
 
 export default function Home() {
+  const [loading, setLoading] = useState(true);
+
   const pageVariants = {
     initial: { opacity: 0 },
-    animate: { opacity: 1, transition: { duration: 0.6 } },
+    animate: { opacity: 1, transition: { duration: 1.2, delay: 0.5 } },
   };
 
   return (
-    <motion.main 
-      initial="initial"
-      animate="animate"
-      variants={pageVariants}
-      style={{ position: 'relative', minHeight: '100vh', overflowX: 'hidden' }}
-    >
+    <>
+      <AnimatePresence mode="wait">
+        {loading && <Preloader key="preloader" onComplete={() => setLoading(false)} />}
+      </AnimatePresence>
+
+      {!loading && (
+        <motion.main 
+          initial="initial"
+          animate="animate"
+          variants={pageVariants}
+          style={{ position: 'relative', minHeight: '100vh', overflowX: 'hidden' }}
+        >
       <Cursor />
+      <StarParticles />
       <Navbar />
 
       {/* Logo — absolute (not fixed), scrolls away with page */}
@@ -37,8 +49,10 @@ export default function Home() {
       <div id="top"><Hero /></div>
       <div id="services"><Services /></div>
       <div id="testimonials"><Testimonials /></div>
-      <div id="pricing"><Pricing /></div>
-      <div><Footer /></div>
-    </motion.main>
+          <div id="pricing"><Pricing /></div>
+          <div><Footer /></div>
+        </motion.main>
+      )}
+    </>
   );
 }

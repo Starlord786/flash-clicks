@@ -117,7 +117,7 @@ export default function Navbar() {
                 initial={{ scale: 1.1, opacity: 0 }}
                 animate={{ scale: 1, opacity: 0.5 }}
                 transition={{ duration: 1.5 }}
-                src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=2070&auto=format&fit=crop"
+                src="/OPTIMIZED_PHOTOS/model shoot/5U1A6822.webp"
                 className="w-full h-full object-cover grayscale"
                 alt="Studio menu background"
               />
