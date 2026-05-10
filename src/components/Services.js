@@ -241,27 +241,46 @@ function HeroSlideshow({ images, service }) {
   );
 }
 
-/* ─── Gallery Grid ──────────────────────────────────────────────────────── */
+/* ─── Gallery Carousel ──────────────────────────────────────────────────── */
 function GalleryGrid({ service }) {
+  const scrollRef = useRef(null);
+
+  const scroll = (direction) => {
+    if (scrollRef.current) {
+      const scrollAmount = scrollRef.current.clientWidth;
+      scrollRef.current.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="svc-gallery">
       <div className="svc-gallery-head">
-        <div className="svc-head-rule" />
-        <div className="svc-head-text">
-          <span className="svc-head-label">Curated Selection</span>
-          <p className="svc-head-desc">{service.description}</p>
+        <div className="svc-head-left">
+          <div className="svc-head-rule" />
+          <div className="svc-head-text">
+            <span className="svc-head-label">Curated Selection</span>
+            <p className="svc-head-desc">{service.description}</p>
+          </div>
+        </div>
+        <div className="svc-slider-nav">
+          <button onClick={() => scroll(-1)} className="svc-nav-btn" aria-label="Scroll left">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button onClick={() => scroll(1)} className="svc-nav-btn" aria-label="Scroll right">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
         </div>
       </div>
 
-      <div className="svc-cards-grid" style={{ perspective: '1500px' }}>
+      <div className="svc-cards-grid" ref={scrollRef}>
         {service.gallery.map((item, idx) => (
           <motion.div 
             key={idx} 
             initial={{ opacity: 0, y: 120, rotateX: 25, scale: 0.9 }}
             whileInView={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 1.4, delay: idx * 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className={`svc-card ${item.span === 'wide' ? 'svc-card--wide' : ''}`}
+            transition={{ duration: 1.4, delay: (idx % 3) * 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="svc-card"
           >
             <div className="svc-card-media">
               <img src={item.src} alt={item.caption} className="svc-card-img" loading="lazy" />
@@ -505,9 +524,16 @@ export default function Services() {
         /* Head row */
         .svc-gallery-head {
           display: flex;
-          align-items: flex-start;
+          align-items: flex-end;
+          justify-content: space-between;
           gap: 32px;
           margin-bottom: 56px;
+          flex-wrap: wrap;
+        }
+        .svc-head-left {
+          display: flex;
+          align-items: flex-start;
+          gap: 32px;
         }
         .svc-head-rule {
           width: 2px;
@@ -538,26 +564,57 @@ export default function Services() {
           margin: 0;
         }
 
+        /* Slider Nav */
+        .svc-slider-nav {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+          background: var(--surface-bg);
+          border: 1px solid var(--border-color);
+          padding: 8px 20px;
+          border-radius: 40px;
+        }
+        .svc-nav-btn {
+          background: none;
+          border: none;
+          color: var(--text-primary);
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 8px;
+          transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .svc-nav-btn:hover {
+          color: #c9a063;
+          transform: scale(1.1);
+        }
+        /* Slider Container */
         .svc-cards-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          align-items: start;
+          display: flex;
           gap: 16px;
+          overflow-x: auto;
+          overflow-y: hidden;
+          scroll-snap-type: x mandatory;
+          padding-bottom: 40px;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+          perspective: 1500px;
         }
-
-        @media (max-width: 900px) {
-          .svc-cards-grid { grid-template-columns: repeat(2, 1fr); }
-          .svc-card--wide  { grid-column: span 2; }
+        .svc-cards-grid::-webkit-scrollbar {
+          display: none;
         }
+        
         @media (max-width: 540px) {
-          .svc-cards-grid { grid-template-columns: 1fr; }
-          .svc-card--wide  { grid-column: span 1; }
           .svc-hero        { height: 100svh; }
           .svc-title-line  { font-size: clamp(3rem, 14vw, 4.5rem); }
+          .svc-gallery-head { flex-direction: column; align-items: flex-start; }
         }
 
         /* Card */
         .svc-card {
+          flex: 0 0 calc(33.333% - 10.66px);
+          scroll-snap-align: start;
           position: relative;
           cursor: pointer;
           background: var(--surface-bg);
@@ -574,24 +631,27 @@ export default function Services() {
           transform: translateY(-6px);
           box-shadow: 0 12px 40px rgba(0,0,0,0.15);
         }
-        .svc-card--wide {
-          grid-column: span 2;
-        }
         @media (max-width: 900px) {
-          .svc-card--wide { grid-column: span 2; }
+          .svc-card { flex: 0 0 calc(50% - 8px); }
+        }
+        @media (max-width: 540px) {
+          .svc-card { flex: 0 0 100%; }
         }
 
         .svc-card-media {
           position: relative;
           width: 100%;
+          aspect-ratio: 4 / 3;
           border-radius: 2px;
           overflow: hidden;
         }
 
         .svc-card-img {
           width: 100%;
-          height: auto;
+          height: 100%;
           display: block;
+          object-fit: cover;
+          object-position: center;
           transition: transform 0.9s cubic-bezier(0.25,0.46,0.45,0.94);
         }
         .svc-card:hover .svc-card-img {
