@@ -32,7 +32,7 @@ export default function Cursor() {
         isHovered.current = isLink;
         cursor.style.backgroundColor = isLink
           ? 'rgba(201,160,99,0.85)'
-          : 'rgba(255,255,255,0.7)';
+          : '#ffffff';
         cursor.style.mixBlendMode = isLink ? 'normal' : 'difference';
       }
     };
@@ -59,10 +59,10 @@ export default function Cursor() {
         width: '20px',
         height: '20px',
         borderRadius: '50%',
-        backgroundColor: 'rgba(255,255,255,0.7)',
+        backgroundColor: '#ffffff',
         mixBlendMode: 'difference',
         pointerEvents: 'none',
-        zIndex: 9999,
+        zIndex: 999999,
         opacity: 0,
         willChange: 'transform',
         // CSS transition only for size/color, not position (too slow for position)

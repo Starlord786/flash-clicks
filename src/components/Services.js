@@ -41,7 +41,7 @@ const servicesData = [
     heroPosition: "center",
     gallery: [
       { src: "/OPTIMIZED_PHOTOS/post wedding/AKST4731.webp", caption: "Eternal Embrace", span: "wide" },
-      { src: "/OPTIMIZED_PHOTOS/post wedding/AKST4695.webp", caption: "Soft Light Portraits" },
+      { src: "/OPTIMIZED_PHOTOS/post wedding/PW - Hori/AKST4695.webp", caption: "Soft Light Portraits" },
       { src: "/OPTIMIZED_PHOTOS/post wedding/AKST4803.webp", caption: "Natural Backdrop" },
       { src: "/OPTIMIZED_PHOTOS/post wedding/AKST4895.webp", caption: "Scenic Love" },
       { src: "/OPTIMIZED_PHOTOS/post wedding/2/5U1A9434.webp", caption: "Garden Romance", span: "wide" },
@@ -194,13 +194,13 @@ function HeroSlideshow({ images, service }) {
 
         return (
           <div key={idx} className={sc}>
-            <Image 
-              src={img} 
-              alt={`${service.label} ${idx}`} 
-              fill 
-              sizes="100vw" 
-              className="svc-slide-img" 
-              priority={idx === 0} 
+            <Image
+              src={img}
+              alt={`${service.label} ${idx}`}
+              fill
+              sizes="100vw"
+              className="svc-slide-img"
+              priority={idx === 0}
               style={{ objectPosition: service.heroPosition || 'center' }}
             />
           </div>
@@ -208,10 +208,17 @@ function HeroSlideshow({ images, service }) {
       })}
 
       <div className="svc-vignette" />
-      <div className="svc-side-num">{service.number}</div>
+
+      {/* Premium Gold Frame */}
+      <div className="absolute inset-4 md:inset-6 lg:inset-8 z-10 pointer-events-none border border-[#c9a063]/50">
+        <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-[#c9a063] -translate-x-[1px] -translate-y-[1px]" />
+        <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-[#c9a063] translate-x-[1px] -translate-y-[1px]" />
+        <div className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-[#c9a063] -translate-x-[1px] translate-y-[1px]" />
+        <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-[#c9a063] translate-x-[1px] translate-y-[1px]" />
+      </div>
 
       <div className="svc-hero-content">
-        <span className="svc-eyebrow">0{service.number} / {service.label}</span>
+        <span className="svc-eyebrow">{service.label}</span>
         <div className="svc-title-wrap">
           {service.title.map((line, i) => (
             <h2 key={i} className="svc-title-line">{line}</h2>
@@ -223,8 +230,8 @@ function HeroSlideshow({ images, service }) {
           {images.map((_, idx) => (
             <button key={idx} className="svc-bar-btn" onClick={() => advance(idx)} aria-label={`Slide ${idx + 1}`}>
               <div className="svc-bar-track">
-                <div 
-                  className="svc-bar-fill" 
+                <div
+                  className="svc-bar-fill"
                   style={{ width: idx === currentIndex ? '100%' : '0%' }}
                 />
               </div>
@@ -234,7 +241,6 @@ function HeroSlideshow({ images, service }) {
       </div>
 
       <div className="svc-scroll-cue">
-        <span style={{ fontFamily: 'Inter', fontSize: '0.65rem', color: '#c9a063', textTransform: 'uppercase', letterSpacing: '0.2em' }}>Scroll</span>
         <div className="svc-scroll-line" />
       </div>
     </div>
@@ -242,7 +248,7 @@ function HeroSlideshow({ images, service }) {
 }
 
 /* ─── Gallery Carousel ──────────────────────────────────────────────────── */
-function GalleryGrid({ service }) {
+function GalleryGrid({ service, onImageClick }) {
   const scrollRef = useRef(null);
 
   const scroll = (direction) => {
@@ -264,23 +270,24 @@ function GalleryGrid({ service }) {
         </div>
         <div className="svc-slider-nav">
           <button onClick={() => scroll(-1)} className="svc-nav-btn" aria-label="Scroll left">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
           </button>
           <button onClick={() => scroll(1)} className="svc-nav-btn" aria-label="Scroll right">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6" /></svg>
           </button>
         </div>
       </div>
 
       <div className="svc-cards-grid" ref={scrollRef}>
         {service.gallery.map((item, idx) => (
-          <motion.div 
-            key={idx} 
+          <motion.div
+            key={idx}
             initial={{ opacity: 0, y: 120, rotateX: 25, scale: 0.9 }}
             whileInView={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 1.4, delay: (idx % 3) * 0.15, ease: [0.16, 1, 0.3, 1] }}
             className="svc-card"
+            onClick={() => onImageClick(item)}
           >
             <div className="svc-card-media">
               <img src={item.src} alt={item.caption} className="svc-card-img" loading="lazy" />
@@ -316,8 +323,49 @@ function GoldDivider({ label }) {
   );
 }
 
+/* ─── Image Modal ───────────────────────────────────────────────────────── */
+function ImageModal({ image, onClose }) {
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      className="svc-modal-overlay"
+      onClick={onClose}
+    >
+      <button className="svc-modal-close" onClick={onClose} aria-label="Close">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6L6 18M6 6l12 12" /></svg>
+      </button>
+      <motion.div
+        className="svc-modal-content"
+        initial={{ scale: 0.95, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.95, opacity: 0 }}
+        transition={{ duration: 0.3, delay: 0.05 }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <img src={image.src} alt={image.caption} className="svc-modal-img" />
+        {image.caption && (
+          <div className="svc-modal-caption">{image.caption}</div>
+        )}
+      </motion.div>
+    </motion.div>
+  );
+}
+
 /* ─── Main Export ───────────────────────────────────────────────────────── */
 export default function Services() {
+  const [selectedImage, setSelectedImage] = useState(null);
+
   return (
     <section id="services-section">
       <style>{`
@@ -417,14 +465,15 @@ export default function Services() {
         }
 
         .svc-title-line {
-          font-family: 'Cormorant Garamond', Georgia, serif;
-          font-size: clamp(3.8rem, 10vw, 9.5rem);
-          font-weight: 300;
-          line-height: 0.9;
+          font-family: var(--font-curly);
+          font-size: clamp(4.5rem, 12vw, 11rem);
+          font-weight: 400;
+          line-height: 1;
           color: #ffffff;
           margin: 0;
-          letter-spacing: -0.02em;
+          letter-spacing: -2px;
           text-shadow: 0 10px 30px rgba(0,0,0,0.4);
+          padding-right: 15px; /* Prevent swash clipping */
         }
 
         .svc-tagline {
@@ -719,6 +768,75 @@ export default function Services() {
         }
 
         /* ═══════════════════════════════════════
+           IMAGE MODAL
+        ═══════════════════════════════════════ */
+        .svc-modal-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background: rgba(0, 0, 0, 0.92);
+          backdrop-filter: blur(8px);
+          z-index: 9999;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 2vw;
+        }
+
+        .svc-modal-close {
+          position: absolute;
+          top: 24px;
+          right: 24px;
+          background: rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          color: #fff;
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          z-index: 10000;
+          transition: all 0.3s ease;
+        }
+
+        .svc-modal-close:hover {
+          background: #c9a063;
+          border-color: #c9a063;
+          transform: rotate(90deg);
+        }
+
+        .svc-modal-content {
+          position: relative;
+          max-width: 90vw;
+          max-height: 90vh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .svc-modal-img {
+          max-width: 100%;
+          max-height: 85vh;
+          object-fit: contain;
+          border-radius: 4px;
+          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .svc-modal-caption {
+          margin-top: 16px;
+          font-family: 'Inter', sans-serif;
+          font-size: 1rem;
+          color: #c9a063;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+        }
+
+        /* ═══════════════════════════════════════
            SECTION SEPARATOR  (between services)
         ═══════════════════════════════════════ */
         .svc-block + .svc-block > .svc-hero::after {
@@ -737,9 +855,15 @@ export default function Services() {
         <div key={svc.id} className="svc-block" id={`service-${svc.id}`}>
           <HeroSlideshow images={svc.heroImages} service={svc} />
           <GoldDivider label={`${svc.number} — ${svc.label} Portfolio`} />
-          <GalleryGrid service={svc} />
+          <GalleryGrid service={svc} onImageClick={setSelectedImage} />
         </div>
       ))}
+
+      <AnimatePresence>
+        {selectedImage && (
+          <ImageModal image={selectedImage} onClose={() => setSelectedImage(null)} />
+        )}
+      </AnimatePresence>
     </section>
   );
 }
