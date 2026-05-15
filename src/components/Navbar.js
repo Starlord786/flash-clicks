@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import ThemeToggle from './ThemeToggle';
 
 const navLinks = [
@@ -15,7 +15,6 @@ const navLinks = [
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     let rafId;
@@ -48,7 +47,7 @@ export default function Navbar() {
               : 'w-full max-w-[1400px] justify-center bg-transparent text-white'
             }`}
         >
-          {/* Desktop Nav Links - Now Centered */}
+          {/* Nav Links */}
           <div className="hidden lg:flex items-center justify-center gap-8 md:gap-10">
             {navLinks.slice(0, 4).map((link) => (
               <a
@@ -64,10 +63,9 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Action / Menu area */}
+          {/* Right side: Theme toggle + Book Studio — no hamburger */}
           <div className="flex items-center gap-4 md:gap-6">
             <ThemeToggle />
-
             <a
               href="#contact"
               className={`hidden md:flex px-6 py-2.5 rounded-full text-[10px] md:text-xs font-bold tracking-widest uppercase transition-all duration-500 ${scrolled
@@ -77,109 +75,9 @@ export default function Navbar() {
             >
               Book Studio
             </a>
-
-            {/* Minimal Hamburger */}
-            <button
-              onClick={() => setMenuOpen(!menuOpen)}
-              className={`flex flex-col justify-center items-center gap-[6px] w-10 h-10 rounded-full transition-colors ${scrolled ? 'bg-[var(--text-primary)]/5 hover:bg-[var(--text-primary)]/10' : 'bg-white/20 hover:bg-white/40 backdrop-blur-sm'
-                }`}
-              aria-label="Menu"
-            >
-              <motion.span
-                animate={menuOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
-                className={`block w-5 h-[1.5px] transition-colors ease-out ${scrolled || menuOpen ? 'bg-[var(--text-primary)]' : 'bg-white'}`}
-              />
-              <motion.span
-                animate={menuOpen ? { opacity: 0 } : { opacity: 1 }}
-                className={`block w-5 h-[1.5px] transition-colors ease-out ${scrolled || menuOpen ? 'bg-[var(--text-primary)]' : 'bg-white'}`}
-              />
-              <motion.span
-                animate={menuOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
-                className={`block w-5 h-[1.5px] transition-colors ease-out ${scrolled || menuOpen ? 'bg-[var(--text-primary)]' : 'bg-white'}`}
-              />
-            </button>
           </div>
         </div>
       </motion.nav>
-
-      {/* Cinematic Fullscreen Menu Overlay */}
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-40 bg-[var(--bg-color)] flex"
-          >
-            {/* Decorative Left Side */}
-            <div className="hidden lg:block w-1/2 h-full bg-[var(--surface-bg)] relative overflow-hidden">
-              <motion.img
-                initial={{ scale: 1.1, opacity: 0 }}
-                animate={{ scale: 1, opacity: 0.5 }}
-                transition={{ duration: 1.5 }}
-                src="/OPTIMIZED_PHOTOS/model shoot/5U1A6822.webp"
-                className="w-full h-full object-cover grayscale"
-                alt="Studio menu background"
-              />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <p className="text-[var(--text-primary)]/20 font-serif text-8xl font-light italic">Studio.</p>
-              </div>
-            </div>
-
-            {/* Menu Links */}
-            <div className="w-full lg:w-1/2 h-full flex flex-col justify-center px-12 md:px-24">
-              <div className="space-y-4 md:space-y-8">
-                {navLinks.map((item, i) => (
-                  <motion.div
-                    key={item.title}
-                    initial={{ x: 50, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    exit={{ x: -50, opacity: 0 }}
-                    transition={{ delay: 0.1 * i, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                    className="overflow-hidden"
-                  >
-                    <a
-                      href={item.href}
-                      onClick={() => setMenuOpen(false)}
-                      className="group flex flex-col relative w-max"
-                    >
-                      <div className="flex items-baseline gap-4 md:gap-8 overflow-hidden py-2">
-                        <span className="text-xs md:text-sm font-sans tracking-[0.25em] text-[var(--accent-color)] opacity-0 -translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
-                          0{i + 1}
-                        </span>
-                        <span className="font-serif text-5xl md:text-7xl lg:text-8xl font-light text-[var(--text-primary)] group-hover:italic group-hover:text-[var(--accent-color)] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
-                          {item.title}
-                        </span>
-                      </div>
-                    </a>
-                  </motion.div>
-                ))}
-              </div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.8 }}
-                className="mt-20 flex flex-col sm:flex-row gap-12 border-t border-[var(--border-color)] pt-10"
-              >
-                <div>
-                  <h4 className="text-xs uppercase tracking-widest text-[var(--text-secondary)] mb-3">Get in Touch</h4>
-                  <a href="mailto:hello@flashclicks.com" className="text-[var(--text-primary)] font-serif text-lg hover:text-[var(--accent-color)] transition-colors">hello@flashclicks.com</a>
-                </div>
-                <div>
-                  <h4 className="text-xs uppercase tracking-widest text-[var(--text-secondary)] mb-3">Socials</h4>
-                  <div className="flex gap-4">
-                    {['Instagram', 'Pinterest'].map(social => (
-                      <a key={social} href="#" className="text-[var(--text-primary)] text-sm uppercase tracking-wider hover:text-[var(--accent-color)] transition-colors">{social}</a>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </>
   );
 }

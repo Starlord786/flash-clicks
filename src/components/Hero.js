@@ -125,15 +125,15 @@ export default function Hero() {
       {/* Hero Content */}
       <motion.div
         style={{ opacity: contentOpacity }}
-        className="relative z-20 w-full h-full flex flex-col justify-center items-center text-center"
+        className="relative z-20 w-full h-full"
       >
         
-        {/* Clean Container Without Glassmorphism Box */}
+        {/* Title + Subtitle + Buttons — all perfectly centered on screen */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95, y: 30 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 1.5, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="relative px-8 py-16 md:px-24 md:py-20 flex flex-col items-center max-w-4xl w-full"
+          className="absolute inset-0 flex flex-col items-center justify-center px-8 md:px-24"
         >
 
           {/* Letter by Letter Title Reveal */}
@@ -141,7 +141,7 @@ export default function Hero() {
             variants={titleVariants}
             initial="hidden"
             animate="visible"
-            className="text-6xl md:text-8xl lg:text-9xl text-[#f8f6f0] font-normal mb-8 flex py-4 justify-center items-center drop-shadow-2xl pr-4"
+            className="text-6xl md:text-8xl lg:text-9xl text-[#f8f6f0] font-normal mb-0 flex py-4 justify-center items-center drop-shadow-2xl pr-4"
             style={{ 
               textShadow: '0 4px 30px rgba(0,0,0,0.15)',
               fontFamily: 'var(--font-curly)',
@@ -159,41 +159,49 @@ export default function Hero() {
             ))}
           </motion.h1>
           
-          <motion.p 
+          {/* Subtitle — tight below title */}
+          <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.5, delay: 1.6, ease: "easeOut" }}
-            className="text-[#c9a063] font-sans text-xs md:text-sm lg:text-base tracking-[0.4em] uppercase mb-12 text-center max-w-[600px] leading-relaxed"
+            className="flex items-center justify-center gap-4 md:gap-8 w-full mt-2 opacity-90"
           >
-            Capturing the profound beauty of fleeting moments
-          </motion.p>
-          
-          {/* Animated Interactive Buttons */}
+            <div className="w-12 md:w-20 h-[1px] bg-gradient-to-r from-transparent to-[#c9a063]" />
+            <p className="text-[#f8f6f0] text-[11px] md:text-sm uppercase tracking-wider font-light text-center">
+              Capturing the profound beauty of fleeting moments
+            </p>
+            <div className="w-12 md:w-20 h-[1px] bg-gradient-to-l from-transparent to-[#c9a063]" />
+          </motion.div>
+
+          {/* Buttons — close below the text */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.5, delay: 2 }}
-            className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto"
+            className="flex flex-col sm:flex-row items-center justify-center gap-6 md:gap-12 mt-14"
           >
-            {/* Fixed links to direct to correct sections (#services and #contact) */}
             <motion.a 
               href="#services" 
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-              className="relative overflow-hidden group px-10 py-5 text-xs tracking-[0.2em] uppercase text-[#f8f6f0] border border-[#f8f6f0] hover:border-[#c9a063] transition-colors duration-500 w-full sm:w-auto text-center rounded-sm"
+              className="group flex items-center gap-4 text-white hover:text-[#c9a063] transition-all duration-700"
             >
-              <span className="relative z-10 group-hover:text-[#0a0a0a] transition-colors duration-500 font-semibold">Our Expertise</span>
-              <div className="absolute inset-0 bg-[#c9a063] transform scale-y-0 origin-bottom group-hover:scale-y-100 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
+              <span className="text-[10px] md:text-xs tracking-[0.3em] uppercase font-light">Our Expertise</span>
+              <div className="relative flex items-center justify-center w-12 h-12 rounded-full border border-white/20 group-hover:border-[#c9a063] transition-colors duration-700">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="transform group-hover:translate-x-1 transition-transform duration-700" stroke="currentColor" strokeWidth="1">
+                  <path d="M4 12h16M13 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
             </motion.a>
             
             <motion.button 
               onClick={() => setShowPackages(true)}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-              className="relative overflow-hidden group px-10 py-5 text-xs tracking-[0.2em] uppercase text-[#0a0a0a] bg-[#f8f6f0] border border-[#f8f6f0] hover:border-[#c9a063] transition-colors duration-500 w-full sm:w-auto text-center rounded-sm"
+              className="group flex items-center gap-4 text-white hover:text-[#c9a063] transition-all duration-700"
             >
-              <span className="relative z-10 group-hover:text-[#0a0a0a] transition-colors duration-500 font-semibold">Book Studio</span>
-              <div className="absolute inset-0 bg-[#c9a063] transform scale-y-0 origin-bottom group-hover:scale-y-100 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
+              <span className="text-[10px] md:text-xs tracking-[0.3em] uppercase font-light">Book Studio</span>
+              <div className="relative flex items-center justify-center w-12 h-12 rounded-full border border-white/20 group-hover:border-[#c9a063] transition-colors duration-700">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="transform group-hover:translate-x-1 transition-transform duration-700" stroke="currentColor" strokeWidth="1">
+                  <path d="M4 12h16M13 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
             </motion.button>
           </motion.div>
         </motion.div>
@@ -219,8 +227,8 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 overflow-y-auto bg-black/60 backdrop-blur-[40px]"
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 overflow-y-auto bg-black/60 backdrop-blur-md"
             onClick={() => setShowPackages(false)}
           >
             <div className="w-full max-w-[1200px] relative my-auto py-12" onClick={e => e.stopPropagation()}>
@@ -235,10 +243,10 @@ export default function Hero() {
                 {packages.map((pkg, index) => (
                   <motion.div
                     key={index}
-                    initial={{ opacity: 0, y: '100vh', scale: 0.97 }}
+                    initial={{ opacity: 0, y: 40, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: pkg.highlighted ? 1.04 : 1 }}
-                    exit={{ opacity: 0, y: '100vh', scale: 0.97 }}
-                    transition={{ duration: 1.8, delay: index * 0.25, ease: [0.16, 1, 0.3, 1] }}
+                    exit={{ opacity: 0, y: 20, scale: 0.95 }}
+                    transition={{ duration: 0.4, delay: index * 0.1, ease: "easeOut" }}
                     whileHover={{
                       y: -10,
                       scale: pkg.highlighted ? 1.07 : 1.02,

@@ -2,9 +2,12 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
+import { useTheme } from './ThemeContext';
 
 export default function Footer() {
   const [showTopBtn, setShowTopBtn] = useState(false);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -348,7 +351,7 @@ export default function Footer() {
           display: flex;
           justify-content: center;
           align-items: center;
-          color: var(--text-primary);
+          color: #ffffff;
           cursor: pointer;
           z-index: 99;
           transition: border-color 0.4s ease, color 0.4s ease, transform 0.4s ease;
@@ -395,12 +398,19 @@ export default function Footer() {
         >
           {/* Brand */}
           <motion.div variants={itemVariants} className="ft-col-brand">
-            <h3 className="ft-brand-title">
-              Flash<span className="ft-brand-light">Clicks.</span>
-            </h3>
-            <p className="ft-brand-desc">
-              Capturing the profound beauty of fleeting moments. We specialize in luxury wedding, portrait, and editorial photography worldwide.
-            </p>
+            <Image
+              src="/images/Logo.png"
+              alt="FlashClicks Logo"
+              width={400}
+              height={280}
+              style={{
+                objectFit: 'contain',
+                width: 'auto',
+                height: '260px',
+                filter: theme === 'dark' ? 'brightness(0) invert(1)' : 'none',
+                transition: 'filter 0.5s ease',
+              }}
+            />
           </motion.div>
 
           {/* Links */}

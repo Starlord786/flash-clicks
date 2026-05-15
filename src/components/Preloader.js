@@ -2,13 +2,14 @@
 
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 export default function Preloader({ onComplete }) {
-  // Show the preloader for 2.5 seconds, then trigger completion
+  // Show the preloader until the flash peaks (2.4s), then trigger completion
   useEffect(() => {
     const timer = setTimeout(() => {
       onComplete();
-    }, 2500);
+    }, 2400);
     return () => clearTimeout(timer);
   }, [onComplete]);
 
@@ -16,68 +17,48 @@ export default function Preloader({ onComplete }) {
     <motion.div
       className="fixed inset-0 z-[9999] bg-[var(--bg-color)] flex items-center justify-center overflow-hidden"
       initial={{ opacity: 1 }}
-      exit={{ opacity: 0, scale: 1.1 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1, ease: "easeInOut" }}
     >
       <div className="relative flex flex-col items-center">
-        {/* Camera Drawing Animation */}
-        <motion.svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          className="w-24 h-24 stroke-[var(--text-primary)]"
-          fill="none"
-          strokeWidth="0.8"
-          strokeLinecap="round"
-          strokeLinejoin="round"
+        {/* Logo Animation */}
+        <motion.div
+          initial={{ opacity: 0, scale: 1.5, filter: "blur(15px)" }}
+          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+          className="relative w-80 h-80 sm:w-[600px] sm:h-[600px] flex items-center justify-center"
         >
-          {/* Camera Body */}
-          <motion.path
-            d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 1.2, ease: "easeInOut" }}
-          />
-          {/* Camera Lens */}
-          <motion.circle
-            cx="12"
-            cy="13"
-            r="4"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 1.2, ease: "easeInOut", delay: 0.2 }}
-          />
-          {/* Lens glare/inner detail */}
-          <motion.circle
-            cx="12"
-            cy="13"
-            r="1.5"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 1.4 }}
-            fill="var(--accent-color)"
-            stroke="none"
-          />
-        </motion.svg>
-
-        {/* Loading text fading in */}
-        <motion.div className="mt-8 overflow-hidden">
-          <motion.h2
-            className="font-sans text-xs sm:text-sm tracking-[0.5em] uppercase text-[var(--accent-color)]"
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
+          <motion.div
+            animate={{
+              scale: [1, 1.05, 1],
+            }}
+            transition={{
+              duration: 4,
+              ease: "easeInOut",
+              repeat: Infinity,
+            }}
+            className="w-full h-full relative flex items-center justify-center"
           >
-            Loading Studio
-          </motion.h2>
+            {/* Cinematic Glow behind the logo */}
+            <div className="absolute inset-0 bg-[var(--accent-color)]/20 blur-[80px] rounded-full scale-50 animate-pulse" />
+            
+            <Image
+              src="/images/Logo.png"
+              alt="FlashClicks Logo"
+              fill
+              className="object-contain relative z-10 drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]"
+              priority
+            />
+          </motion.div>
         </motion.div>
       </div>
 
-      {/* Camera Flash Effect - flashes right before unmounting */}
+      {/* Camera Flash Effect - flashes to white, then the whole preloader fades out revealing the site */}
       <motion.div
         className="fixed inset-0 bg-white z-[10000] pointer-events-none"
         initial={{ opacity: 0 }}
-        animate={{ opacity: [0, 1, 0] }}
-        transition={{ duration: 0.4, delay: 2.1, times: [0, 0.2, 1], ease: "circOut" }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3, delay: 2.1, ease: "easeIn" }}
       />
     </motion.div>
   );
