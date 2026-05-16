@@ -106,8 +106,8 @@ export default function About() {
           >
             {/* The actual image */}
             <motion.img 
-              src="/OPTIMIZED_PHOTOS/Untitled-1.webp" 
-              alt="FlashClicks Studio Behind the Scenes"
+              src="/OPTIMIZED_PHOTOS/post%20wedding/AKST4731.webp" 
+              alt="FlashClicks Studio Cinematic Moment"
               className="w-full h-[120%] object-cover object-center absolute top-[-10%] left-0 grayscale hover:grayscale-0 transition-all duration-700"
               initial={{ scale: 1.2, filter: "blur(10px)" }}
               whileInView={{ scale: 1, filter: "blur(0px)" }}

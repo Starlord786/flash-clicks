@@ -218,7 +218,6 @@ function HeroSlideshow({ images, service }) {
       </div>
 
       <div className="svc-hero-content">
-        <span className="svc-eyebrow">{service.label}</span>
         <div className="svc-title-wrap">
           {service.title.map((line, i) => (
             <h2 key={i} className="svc-title-line">{line}</h2>
@@ -268,39 +267,43 @@ function GalleryGrid({ service, onImageClick }) {
             <p className="svc-head-desc">{service.description}</p>
           </div>
         </div>
-        <div className="svc-slider-nav">
-          <button onClick={() => scroll(-1)} className="svc-nav-btn" aria-label="Scroll left">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
-          </button>
-          <button onClick={() => scroll(1)} className="svc-nav-btn" aria-label="Scroll right">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6" /></svg>
-          </button>
-        </div>
       </div>
+      <div className="relative group/gallery">
+        <div className="svc-cards-grid" ref={scrollRef}>
+          {service.gallery.map((item, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 120, rotateX: 25, scale: 0.9 }}
+              whileInView={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 1.4, delay: (idx % 3) * 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="svc-card"
+              onClick={() => onImageClick(item)}
+            >
+              <div className="svc-card-media">
+                <img src={item.src} alt={item.caption} className="svc-card-img" loading="lazy" />
+                <div className="svc-card-glass" />
+                <div className="svc-card-shine" />
+              </div>
+            </motion.div>
+          ))}
+        </div>
 
-      <div className="svc-cards-grid" ref={scrollRef}>
-        {service.gallery.map((item, idx) => (
-          <motion.div
-            key={idx}
-            initial={{ opacity: 0, y: 120, rotateX: 25, scale: 0.9 }}
-            whileInView={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 1.4, delay: (idx % 3) * 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="svc-card"
-            onClick={() => onImageClick(item)}
-          >
-            <div className="svc-card-media">
-              <img src={item.src} alt={item.caption} className="svc-card-img" loading="lazy" />
-              <div className="svc-card-glass" />
-              <div className="svc-card-shine" />
-            </div>
-            <div className="svc-card-footer">
-              <span className="svc-card-num">0{idx + 1}</span>
-              <span className="svc-card-cap">{item.caption}</span>
-              <span className="svc-card-arrow">↗</span>
-            </div>
-          </motion.div>
-        ))}
+        {/* Side Navigation Arrows - Positioned OUTSIDE the grid */}
+        <button 
+          onClick={() => scroll(-1)} 
+          className="absolute -left-4 lg:-left-16 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-12 h-12 rounded-full border border-white/20 bg-black/20 backdrop-blur-md text-white/70 hover:text-[#c9a063] hover:border-[#c9a063] transition-all duration-500 pointer-events-auto"
+          aria-label="Scroll left"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button 
+          onClick={() => scroll(1)} 
+          className="absolute -right-4 lg:-right-16 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-12 h-12 rounded-full border border-white/20 bg-black/20 backdrop-blur-md text-white/70 hover:text-[#c9a063] hover:border-[#c9a063] transition-all duration-500 pointer-events-auto"
+          aria-label="Scroll right"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
       </div>
     </div>
   );
@@ -316,8 +319,6 @@ function GoldDivider({ label }) {
       viewport={{ once: true }}
       transition={{ duration: 1 }}
     >
-      <div className="svc-divider-line" />
-      <span className="svc-divider-label">{label}</span>
       <div className="svc-divider-line" />
     </motion.div>
   );
@@ -466,9 +467,9 @@ export default function Services() {
 
         .svc-title-line {
           font-family: var(--font-curly);
-          font-size: clamp(4.5rem, 12vw, 11rem);
+          font-size: clamp(3rem, 9vw, 6.5rem);
           font-weight: 400;
-          line-height: 1;
+          line-height: 0.95;
           color: #ffffff;
           margin: 0;
           letter-spacing: -2px;
@@ -854,7 +855,7 @@ export default function Services() {
       {servicesData.map((svc, idx) => (
         <div key={svc.id} className="svc-block" id={`service-${svc.id}`}>
           <HeroSlideshow images={svc.heroImages} service={svc} />
-          <GoldDivider label={`${svc.number} — ${svc.label} Portfolio`} />
+          <GoldDivider />
           <GalleryGrid service={svc} onImageClick={setSelectedImage} />
         </div>
       ))}

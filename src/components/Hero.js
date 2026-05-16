@@ -1,7 +1,30 @@
 "use client";
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+
+const variants = {
+  enter: (direction) => {
+    return {
+      x: direction > 0 ? '100%' : '-100%',
+      opacity: 1
+    };
+  },
+  center: {
+    zIndex: 1,
+    x: 0,
+    opacity: 1
+  },
+  exit: (direction) => {
+    return {
+      zIndex: 0,
+      x: direction < 0 ? '100%' : '-100%',
+      opacity: 1
+    };
+  }
+};
+const swipeConfidenceThreshold = 10000;
+const swipePower = (offset, velocity) => Math.abs(offset) * velocity;
 
 export default function Hero() {
   const containerRef = useRef(null);
@@ -52,15 +75,35 @@ export default function Hero() {
     }
   ];
 
-  const handleTimeUpdate = () => {
-    const video = videoRef.current;
-    if (!video) return;
-    const timeRemaining = video.duration - video.currentTime;
-    if (timeRemaining <= 0.2) {
-      video.currentTime = 0;
-      video.play().catch(() => {});
-    }
+  const [slideData, setSlideData] = useState([0, 0]);
+  const currentIndex = slideData[0];
+  const direction = slideData[1];
+
+  const paginate = (newDirection) => {
+    setSlideData((prev) => {
+      let nextIndex = prev[0] + newDirection;
+      if (nextIndex > 3) nextIndex = 0;
+      if (nextIndex < 0) nextIndex = 3;
+      return [nextIndex, newDirection];
+    });
   };
+
+  const setSlide = (index) => {
+    setSlideData((prev) => {
+      const current = prev[0];
+      if (current === index) return prev;
+      const newDirection = index > current ? 1 : -1;
+      return [index, newDirection];
+    });
+  };
+
+  useEffect(() => {
+    let timer;
+    if (currentIndex > 0) {
+      timer = setTimeout(() => paginate(1), 5000);
+    }
+    return () => clearTimeout(timer);
+  }, [currentIndex]);
   
   // Lightweight Parallax — only Y translation (GPU composited, no layout)
   const { scrollYProgress } = useScroll({
@@ -92,18 +135,97 @@ export default function Hero() {
       id="home" 
       className="relative h-screen w-full flex items-center justify-center bg-[#0a0a0a] transition-colors duration-500"
     >
-      {/* Background Video with GPU-composited Y parallax */}
-      <motion.div style={{ y: bgY, willChange: 'transform' }} className="absolute inset-0 w-full h-full bg-[#0a0a0a] transition-colors duration-500" aria-hidden>
-        <video
-          ref={videoRef}
-          src="/video/post-optimized.mp4?v=trimmed"
-          autoPlay
-          muted
-          loop
-          playsInline
-          onTimeUpdate={handleTimeUpdate}
-          className="w-full h-full object-cover object-center absolute inset-0 transition-opacity duration-700 ease-in-out"
-        />
+      {/* Background Slider with GPU-composited Y parallax */}
+      <motion.div style={{ y: bgY, willChange: 'transform' }} className="absolute inset-0 w-full h-full bg-[#0a0a0a] transition-colors duration-500 overflow-hidden" aria-hidden>
+        <AnimatePresence initial={false} custom={direction}>
+          <motion.div
+            key={currentIndex}
+            custom={direction}
+            variants={variants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{
+              x: { type: "tween", duration: 0.8, ease: [0.25, 1, 0.5, 1] },
+              opacity: { duration: 0.4 }
+            }}
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={1}
+            onDragEnd={(e, { offset, velocity }) => {
+              const swipe = swipePower(offset.x, velocity.x);
+              if (swipe < -swipeConfidenceThreshold) {
+                paginate(1);
+              } else if (swipe > swipeConfidenceThreshold) {
+                paginate(-1);
+              }
+            }}
+            className="absolute inset-0 w-full h-full"
+          >
+            {currentIndex === 0 && (
+              <video
+                ref={videoRef}
+                src="/video/post-optimized.mp4?v=trimmed"
+                autoPlay
+                muted
+                playsInline
+                onEnded={() => paginate(1)}
+                className="w-full h-full object-cover object-center absolute inset-0 pointer-events-none"
+              />
+            )}
+            {currentIndex === 1 && (
+              <img
+                src="/OPTIMIZED_PHOTOS/indian%20temple%20wedding/5U1A3503.webp"
+                alt="Indian Temple Wedding"
+                className="w-full h-full object-cover object-center absolute inset-0 pointer-events-none"
+              />
+            )}
+            {currentIndex === 2 && (
+              <img
+                src="/OPTIMIZED_PHOTOS/baby%20shower/2/BS%20-%20Hori/02.webp"
+                alt="Baby Shower"
+                className="w-full h-full object-cover object-center absolute inset-0 pointer-events-none"
+              />
+            )}
+            {currentIndex === 3 && (
+              <img
+                src="/OPTIMIZED_PHOTOS/model%20shoot/5U1A6822.webp"
+                alt="Model Shoot"
+                className="w-full h-full object-cover object-[50%_25%] absolute inset-0 pointer-events-none"
+              />
+            )}
+          </motion.div>
+        </AnimatePresence>
+        
+        {/* Slider Indicators */}
+        <div className="absolute bottom-8 right-8 md:bottom-12 md:right-12 z-30 flex gap-3 pointer-events-auto">
+          {[0, 1, 2, 3].map((index) => (
+            <button
+              key={index}
+              onClick={() => setSlide(index)}
+              className={`h-2 rounded-full transition-all duration-500 ${
+                currentIndex === index ? 'bg-[#c9a063] w-8' : 'bg-white/30 w-2 hover:bg-white/60'
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
+
+        {/* Left/Right Manual Scroll Arrows */}
+        <button 
+          onClick={() => paginate(-1)}
+          className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-full border border-white/20 bg-black/10 backdrop-blur-sm text-white/50 hover:text-[#c9a063] hover:border-[#c9a063] transition-all duration-500 pointer-events-auto group"
+          aria-label="Previous slide"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="transform group-hover:-translate-x-1 transition-transform duration-500"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button 
+          onClick={() => paginate(1)}
+          className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-30 flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-full border border-white/20 bg-black/10 backdrop-blur-sm text-white/50 hover:text-[#c9a063] hover:border-[#c9a063] transition-all duration-500 pointer-events-auto group"
+          aria-label="Next slide"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="transform group-hover:translate-x-1 transition-transform duration-500"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
       </motion.div>
 
       {/* Dynamic Overlay with Cinematic Vignette Gradient */}
@@ -125,7 +247,7 @@ export default function Hero() {
       {/* Hero Content */}
       <motion.div
         style={{ opacity: contentOpacity }}
-        className="relative z-20 w-full h-full"
+        className="relative z-20 w-full h-full pointer-events-none"
       >
         
         {/* Title + Subtitle + Buttons — all perfectly centered on screen */}
@@ -164,7 +286,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.5, delay: 1.6, ease: "easeOut" }}
-            className="flex items-center justify-center gap-4 md:gap-8 w-full mt-2 opacity-90"
+            className="flex items-center justify-center gap-4 md:gap-8 w-full mt-4 opacity-90"
           >
             <div className="w-12 md:w-20 h-[1px] bg-gradient-to-r from-transparent to-[#c9a063]" />
             <p className="text-[#f8f6f0] text-[11px] md:text-sm uppercase tracking-wider font-light text-center">
@@ -178,14 +300,15 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.5, delay: 2 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-6 md:gap-12 mt-14"
+            className="flex flex-col sm:flex-row items-center justify-center gap-6 md:gap-12 pointer-events-auto"
+            style={{ marginTop: '80px' }}
           >
             <motion.a 
               href="#services" 
-              className="group flex items-center gap-4 text-white hover:text-[#c9a063] transition-all duration-700"
+              className="group flex items-center justify-center gap-6 px-10 py-4 rounded-full border border-white/10 hover:border-[#c9a063]/30 bg-white/5 backdrop-blur-md text-white hover:text-[#c9a063] transition-all duration-700 shadow-2xl min-w-[200px]"
             >
-              <span className="text-[10px] md:text-xs tracking-[0.3em] uppercase font-light">Our Expertise</span>
-              <div className="relative flex items-center justify-center w-12 h-12 rounded-full border border-white/20 group-hover:border-[#c9a063] transition-colors duration-700">
+              <span className="text-[10px] md:text-xs tracking-widest uppercase font-light">Our Expertise</span>
+              <div className="relative flex items-center justify-center w-10 h-10 rounded-full border border-white/20 group-hover:border-[#c9a063] transition-colors duration-700">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="transform group-hover:translate-x-1 transition-transform duration-700" stroke="currentColor" strokeWidth="1">
                   <path d="M4 12h16M13 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
@@ -194,10 +317,10 @@ export default function Hero() {
             
             <motion.button 
               onClick={() => setShowPackages(true)}
-              className="group flex items-center gap-4 text-white hover:text-[#c9a063] transition-all duration-700"
+              className="group flex items-center justify-center gap-6 px-10 py-4 rounded-full border border-white/10 hover:border-[#c9a063]/30 bg-white/5 backdrop-blur-md text-white hover:text-[#c9a063] transition-all duration-700 shadow-2xl min-w-[200px]"
             >
-              <span className="text-[10px] md:text-xs tracking-[0.3em] uppercase font-light">Book Studio</span>
-              <div className="relative flex items-center justify-center w-12 h-12 rounded-full border border-white/20 group-hover:border-[#c9a063] transition-colors duration-700">
+              <span className="text-[10px] md:text-xs tracking-widest uppercase font-light">Book Studio</span>
+              <div className="relative flex items-center justify-center w-10 h-10 rounded-full border border-white/20 group-hover:border-[#c9a063] transition-colors duration-700">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="transform group-hover:translate-x-1 transition-transform duration-700" stroke="currentColor" strokeWidth="1">
                   <path d="M4 12h16M13 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>

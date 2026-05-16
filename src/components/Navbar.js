@@ -66,15 +66,60 @@ export default function Navbar() {
           {/* Right side: Theme toggle + Book Studio — no hamburger */}
           <div className="flex items-center gap-4 md:gap-6">
             <ThemeToggle />
-            <a
-              href="#contact"
-              className={`hidden md:flex px-6 py-2.5 rounded-full text-[10px] md:text-xs font-bold tracking-widest uppercase transition-all duration-500 ${scrolled
-                  ? 'bg-[var(--text-primary)] text-[var(--bg-color)] hover:bg-[var(--accent-color)] hover:text-[var(--bg-color)]'
-                  : 'bg-white/10 backdrop-blur-md text-white hover:bg-white hover:text-black border border-white/20 hover:border-transparent'
-                }`}
+            <motion.a
+              href="#pricing"
+              whileHover="hover"
+              initial="initial"
+              whileTap={{ scale: 0.98 }}
+              className="hidden md:flex items-center gap-3 px-8 py-3.5 relative group pointer-events-auto"
             >
-              Book Studio
-            </a>
+              {/* Background Glow on Hover */}
+              <motion.div 
+                variants={{
+                  initial: { opacity: 0, scale: 0.8 },
+                  hover: { opacity: 1, scale: 1 }
+                }}
+                transition={{ duration: 0.4 }}
+                className="absolute inset-0 bg-[var(--accent-color)]/10 blur-xl rounded-full pointer-events-none"
+              />
+
+              {/* Viewfinder Brackets */}
+              <motion.div 
+                className={`absolute inset-0 pointer-events-none transition-colors duration-500 ${scrolled ? 'text-[var(--text-primary)]' : 'text-white'}`}
+                variants={{
+                  initial: { scale: 1.1, opacity: 0.3 },
+                  hover: { scale: 1, opacity: 1, color: '#c9a063' }
+                }}
+              >
+                <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-current" />
+                <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-current" />
+                <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-current" />
+                <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-current" />
+              </motion.div>
+
+              {/* Pulsing Status Indicator */}
+              <div className="relative flex items-center justify-center w-2 h-2">
+                <div className="absolute inset-0 bg-red-500 rounded-full animate-ping opacity-40" />
+                <div className="w-1.5 h-1.5 bg-red-500 rounded-full shadow-[0_0_8px_rgba(239,68,68,0.6)] group-hover:bg-red-400 transition-colors" />
+              </div>
+
+              <span 
+                className={`text-[9px] md:text-[10px] font-bold tracking-[0.4em] uppercase z-10 transition-colors duration-500 group-hover:text-[var(--accent-color)] ${scrolled ? 'text-[var(--text-primary)]' : 'text-white'}`}
+                style={{ fontFamily: 'var(--font-playfair)' }}
+              >
+                Book Now
+              </span>
+
+              {/* Shimmer/Flash Effect */}
+              <motion.div
+                variants={{
+                  initial: { x: '-150%', opacity: 0 },
+                  hover: { x: '150%', opacity: 1 }
+                }}
+                transition={{ duration: 0.8, ease: "easeInOut" }}
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none"
+              />
+            </motion.a>
           </div>
         </div>
       </motion.nav>
